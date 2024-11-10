@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结算 - Future Furniture</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 导航栏内容 -->
+    </nav>
+
+    <main class="checkout-page">
+        <div class="checkout-container">
+            <!-- 结算进度 -->
+            <div class="checkout-steps">
+                <div class="step completed">
+                    <span class="step-number">1</span>
+                    <span class="step-text">确认订单</span>
+                </div>
+                <div class="step active">
+                    <span class="step-number">2</span>
+                    <span class="step-text">支付订单</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span class="step-text">完成</span>
+                </div>
+            </div>
+
+            <div class="checkout-content">
+                <!-- 收货地址 -->
+                <section class="checkout-section address-section">
+                    <h2>收货地址</h2>
+                    <div class="address-list">
+                        <div class="address-item selected">
+                            <div class="address-info">
+                                <div class="recipient">
+                                    <span class="name">张三</span>
+                                    <span class="phone">138****8888</span>
+                                    <span class="tag default">默认</span>
+                                </div>
+                                <div class="address">
+                                    北京市朝阳区未来大厦B座
+                                </div>
+                            </div>
+                            <button class="edit-address">
+                                <span class="material-icons">edit</span>
+                            </button>
+                        </div>
+                        <button class="add-address">
+                            <span class="material-icons">add</span>
+                            添加新地址
+                        </button>
+                    </div>
+                </section>
+
+                <!-- 配送方式 -->
+                <section class="checkout-section delivery-section">
+                    <h2>配送方式</h2>
+                    <div class="delivery-options">
+                        <label class="delivery-option">
+                            <input type="radio" name="delivery" value="standard" checked>
+                            <div class="option-content">
+                                <div class="option-info">
+                                    <h3>标准配送</h3>
+                                    <p>预计3-5天送达</p>
+                                </div>
+                                <span class="delivery-fee">免费</span>
+                            </div>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="delivery" value="express">
+                            <div class="option-content">
+                                <div class="option-info">
+                                    <h3>快速配送</h3>
+                                    <p>预计1-2天送达</p>
+                                </div>
+                                <span class="delivery-fee">¥50</span>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 商品清单 -->
+                <section class="checkout-section items-section">
+                    <h2>商品清单</h2>
+                    <div class="checkout-items">
+                        <div class="checkout-item">
+                            <img src="images/chair.jpg" alt="智能人体工学椅">
+                            <div class="item-info">
+                                <h3>智能人体工学椅</h3>
+                                <p class="item-spec">颜色：经典黑</p>
+                                <div class="item-price">
+                                    <span class="price">¥2,999</span>
+                                    <span class="quantity">×1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 优惠券 -->
+                <section class="checkout-section coupon-section">
+                    <h2>优惠券</h2>
+                    <div class="coupon-selector">
+                        <select name="coupon" id="couponSelect">
+                            <option value="">请选择优惠券</option>
+                            <option value="200">满2000减200</option>
+                            <option value="100">满1000减100</option>
+                        </select>
+                        <span class="available-coupons">共2张可用</span>
+                    </div>
+                </section>
+
+                <!-- 发票信息 -->
+                <section class="checkout-section invoice-section">
+                    <h2>发票信息</h2>
+                    <div class="invoice-options">
+                        <label class="invoice-option">
+                            <input type="radio" name="invoice" value="personal" checked>
+                            <span>个人发票</span>
+                        </label>
+                        <label class="invoice-option">
+                            <input type="radio" name="invoice" value="company">
+                            <span>企业发票</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 订单备注 -->
+                <section class="checkout-section note-section">
+                    <h2>订单备注</h2>
+                    <textarea placeholder="请输入订单备注信息（选填）" maxlength="200"></textarea>
+                </section>
+            </div>
+
+            <!-- 订单金额 -->
+            <div class="checkout-summary">
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>商品总额</span>
+                        <span>¥2,999</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>运费</span>
+                        <span>免费</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>优惠券</span>
+                        <span>-¥200</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>应付金额</span>
+                        <span>¥2,799</span>
+                    </div>
+                </div>
+                <button class="submit-order">提交订单</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 地址编辑弹窗 -->
+    <div class="modal address-modal">
+        <!-- 地址编辑表单内容将在后续添加 -->
+    </div>
+
+    <footer>
+        <!-- 页脚内容 -->
+    </footer>
+
+    <script src="main.js" type="module"></script>
+</body>
+</html> 

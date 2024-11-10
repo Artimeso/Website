@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能人体工学椅 - Future Furniture</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="智能人体工学椅 - 自适应脊椎支撑，智能温度调节，为您打造舒适的办公环境。">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 导航栏内容 -->
+    </nav>
+
+    <main class="product-detail-page">
+        <div class="product-container">
+            <!-- 产品图片展示 -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="images/chair-large.jpg" alt="智能人体工学椅" id="mainImage">
+                    <button class="zoom-btn">
+                        <span class="material-icons">zoom_in</span>
+                    </button>
+                </div>
+                <div class="thumbnail-list">
+                    <button class="thumb-btn active" data-image="images/chair-1.jpg">
+                        <img src="images/chair-1.jpg" alt="产品图片1">
+                    </button>
+                    <button class="thumb-btn" data-image="images/chair-2.jpg">
+                        <img src="images/chair-2.jpg" alt="产品图片2">
+                    </button>
+                    <button class="thumb-btn" data-image="images/chair-3.jpg">
+                        <img src="images/chair-3.jpg" alt="产品图片3">
+                    </button>
+                    <button class="thumb-btn" data-image="images/chair-4.jpg">
+                        <img src="images/chair-4.jpg" alt="产品图片4">
+                    </button>
+                </div>
+            </div>
+
+            <!-- 产品信息 -->
+            <div class="product-info">
+                <div class="product-header">
+                    <h1>智能人体工学椅</h1>
+                    <button class="share-btn">
+                        <span class="material-icons">share</span>
+                    </button>
+                </div>
+
+                <div class="product-meta">
+                    <div class="rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">4.8 (128条评价)</span>
+                    </div>
+                    <span class="sales-count">月销 1,234</span>
+                </div>
+
+                <div class="product-price">
+                    <div class="price-info">
+                        <span class="current-price">¥2,999</span>
+                        <span class="original-price">¥3,999</span>
+                        <span class="discount-tag">-25%</span>
+                    </div>
+                    <div class="promotion-tags">
+                        <span class="tag">限时特惠</span>
+                        <span class="tag">满2000减200</span>
+                    </div>
+                </div>
+
+                <div class="product-options">
+                    <div class="option-group">
+                        <h3>颜色选择</h3>
+                        <div class="color-options">
+                            <label class="color-option">
+                                <input type="radio" name="color" value="black" checked>
+                                <span class="color-dot" style="background: #000000"></span>
+                                <span class="color-name">经典黑</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="radio" name="color" value="white">
+                                <span class="color-dot" style="background: #FFFFFF"></span>
+                                <span class="color-name">简约白</span>
+                            </label>
+                            <label class="color-option">
+                                <input type="radio" name="color" value="gray">
+                                <span class="color-dot" style="background: #808080"></span>
+                                <span class="color-name">商务灰</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>数量</h3>
+                        <div class="quantity-selector">
+                            <button class="decrease">-</button>
+                            <input type="number" value="1" min="1" max="99">
+                            <button class="increase">+</button>
+                            <span class="stock-info">库存 50 件</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-actions">
+                    <button class="add-to-cart">
+                        <span class="material-icons">shopping_cart</span>
+                        加入购物车
+                    </button>
+                    <button class="buy-now">立即购买</button>
+                    <button class="add-to-favorite">
+                        <span class="material-icons">favorite_border</span>
+                    </button>
+                </div>
+
+                <div class="service-promises">
+                    <div class="promise-item">
+                        <span class="material-icons">verified_user</span>
+                        <span>正品保障</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="material-icons">local_shipping</span>
+                        <span>免费配送</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="material-icons">assignment_return</span>
+                        <span>7天退换</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="material-icons">build</span>
+                        <span>免费安装</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 产品详情标签页 -->
+        <div class="product-tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="details">商品详情</button>
+                <button class="tab-btn" data-tab="specs">规格参数</button>
+                <button class="tab-btn" data-tab="reviews">用户评价</button>
+                <button class="tab-btn" data-tab="service">售后服务</button>
+            </div>
+
+            <!-- 标签页内容将在下一部分继续添加 -->
+        </div>
+    </main>
+
+    <footer>
+        <!-- 页脚内容 -->
+    </footer>
+
+    <script src="main.js" type="module"></script>
+</body>
+</html> 

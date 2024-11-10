@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车 - Future Furniture</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 与其他页面相同的导航栏内容 -->
+    </nav>
+
+    <main class="cart-page">
+        <h1>购物车</h1>
+        
+        <div class="cart-container">
+            <div class="cart-items">
+                <!-- 购物车商品列表 -->
+                <div class="cart-item">
+                    <img src="images/chair-small.jpg" alt="智能人体工学椅">
+                    <div class="item-details">
+                        <h3>智能人体工学椅</h3>
+                        <p class="item-color">颜色：黑色</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="decrease">-</button>
+                        <input type="number" value="1" min="1" max="99">
+                        <button class="increase">+</button>
+                    </div>
+                    <div class="item-price">¥2,999</div>
+                    <button class="remove-item">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+                
+                <!-- 可以添加更多购物车商品 -->
+            </div>
+
+            <div class="cart-summary">
+                <h2>订单摘要</h2>
+                <div class="summary-item">
+                    <span>商品总价</span>
+                    <span>¥2,999</span>
+                </div>
+                <div class="summary-item">
+                    <span>运费</span>
+                    <span>免运费</span>
+                </div>
+                <div class="coupon-input">
+                    <input type="text" placeholder="输入优惠码">
+                    <button class="apply-coupon">应用</button>
+                </div>
+                <div class="summary-total">
+                    <span>总计</span>
+                    <span>¥2,999</span>
+                </div>
+                <button class="checkout-button">去结算</button>
+                <button class="continue-shopping">继续购物</button>
+            </div>
+        </div>
+
+        <section class="recommended-products">
+            <h2>你可能还喜欢</h2>
+            <div class="product-grid">
+                <!-- 推荐产品卡片 -->
+                <div class="product-card">
+                    <img src="images/desk.jpg" alt="电动升降办公桌">
+                    <h3>电动升降办公桌</h3>
+                    <p>¥3,499</p>
+                    <button class="primary-button">加入购物车</button>
+                </div>
+                <!-- 可以添加更多推荐产品 -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- 与其他页面相同的页脚内容 -->
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html> 

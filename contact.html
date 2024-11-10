@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - Future Furniture</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 与其他页面相同的导航栏内容 -->
+    </nav>
+
+    <header class="page-header contact-header">
+        <h1>联系我们</h1>
+        <p>随时为您提供专业支持</p>
+    </header>
+
+    <main class="contact-page">
+        <section class="contact-info-section">
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <span class="material-icons">location_on</span>
+                    <h3>实体展厅</h3>
+                    <p>北京市朝阳区未来大厦B座</p>
+                    <p>营业时间：10:00-22:00</p>
+                </div>
+                <div class="contact-method">
+                    <span class="material-icons">phone</span>
+                    <h3>客服热线</h3>
+                    <p>400-888-8888</p>
+                    <p>服务时间：9:00-21:00</p>
+                </div>
+                <div class="contact-method">
+                    <span class="material-icons">email</span>
+                    <h3>电子邮箱</h3>
+                    <p>contact@futurefurniture.com</p>
+                    <p>24小时内回复</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-form-section">
+            <div class="contact-container">
+                <div class="form-wrapper">
+                    <h2>发送消息</h2>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">主题</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">请选择咨询主题</option>
+                                <option value="product">产品咨询</option>
+                                <option value="service">售后服务</option>
+                                <option value="cooperation">商务合作</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">消息内容</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">发送消息</button>
+                    </form>
+                </div>
+                
+                <div class="map-wrapper">
+                    <h2>门店地址</h2>
+                    <div id="map" class="contact-map">
+                        <!-- 这里将嵌入地图，可以使用百度地图或高德地图API -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2>常见问题</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>如何查询订单状态？</h3>
+                    <p>登录账户后，在"我的订单"中可以查看所有订单的状态和物流信息。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>产品保修政策是什么？</h3>
+                    <p>我们的产品享有2年保修服务，电子部件保修1年。详细保修政策请查看产品说明书。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>如何预约上门安装？</h3>
+                    <p>收到货物后，可以通过客服热线或在线客服预约安装时间。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- 与其他页面相同的页脚内容 -->
+    </footer>
+
+    <script src="main.js"></script>
+    <!-- 添加地图API脚本 -->
+    <script src="https://map.qq.com/api/js?v=2.exp&key=YOUR_KEY"></script>
+</body>
+</html> 
