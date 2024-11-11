@@ -19,17 +19,10 @@ class MainApp {
         window.notify = notificationManager;
         window.utils = utils;
         this.init();
+        this.setupGlobalErrorHandler();
     }
 
     init() {
-        // 简单地监听页面加载完成
-        window.addEventListener('load', () => {
-            const loader = document.querySelector('.page-loader');
-            if (loader) {
-                loader.remove();
-            }
-        });
-
         this.setupCommonFeatures();
         this.initPageSpecific();
         this.setupEventListeners();
@@ -37,12 +30,27 @@ class MainApp {
 
     // 设置公共功能
     setupCommonFeatures() {
+        // 初始化页面加载器
+        this.setupPageLoader();
         // 初始化导航菜单
         this.setupNavigation();
         // 初始化购物车
         this.initCart();
         // 初始化认证状态
         this.initAuth();
+    }
+
+    // 设置页面加载器
+    setupPageLoader() {
+        const loader = document.querySelector('.page-loader');
+        if (!loader) return;
+
+        window.addEventListener('load', () => {
+            loader.classList.add('fade-out');
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        });
     }
 
     // 设置导航菜单
