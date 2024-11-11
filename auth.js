@@ -1,189 +1,212 @@
-// 用户认证管理
-import api from './api.js';
-import { storage } from './utils.js';
+import utils from './utils.js';
 
-const auth = {
-    // 用户状态
-    user: null,
-    isAuthenticated: false,
-    token: null,
+// 认证管理
+class AuthManager {
+    constructor() {
+        this.token = localStorage.getItem('auth_token');
+        this.user = null;
+    }
 
-    // 初始化认证状态
-    init() {
-        this.token = storage.get('auth_token');
-        if (this.token) {
-            this.loadUserProfile();
+    // 检查认证状态
+    async checkAuthStatus() {
+        if (!this.token) {
+            this.updateUIForGuest();
+            return;
         }
-        this.setupAuthListeners();
-    },
+
+        try {
+            const response = await fetch('/api/auth/status', {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Auth check failed');
+            }
+
+            const data = await response.json();
+            this.user = data.user;
+            this.updateUIForUser();
+        } catch (error) {
+            console.error('Auth check failed:', error);
+            this.logout();
+        }
+    }
+
+    // 更新游客UI
+    updateUIForGuest() {
+        const userMenu = document.querySelector('.user-menu');
+        if (userMenu) {
+            userMenu.innerHTML = `
+                <a href="login.html">
+                    <span class="material-icons">person</span>
+                </a>
+            `;
+        }
+
+        // 隐藏需要登录的功能
+        document.querySelectorAll('.requires-auth').forEach(element => {
+            element.style.display = 'none';
+        });
+    }
+
+    // 更新登录用户UI
+    updateUIForUser() {
+        const userMenu = document.querySelector('.user-menu');
+        if (userMenu) {
+            userMenu.innerHTML = `
+                <div class="dropdown">
+                    <button class="dropdown-toggle">
+                        <img src="${this.user.avatar || 'images/default-avatar.jpg'}" 
+                             alt="${this.user.username}"
+                             class="user-avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="user-center.html">
+                            <span class="material-icons">person</span>
+                            个人中心
+                        </a>
+                        <a href="orders.html">
+                            <span class="material-icons">shopping_bag</span>
+                            我的订单
+                        </a>
+                        <a href="favorites.html">
+                            <span class="material-icons">favorite</span>
+                            我的收藏
+                        </a>
+                        <a href="settings.html">
+                            <span class="material-icons">settings</span>
+                            账号设置
+                        </a>
+                        <button class="logout-btn" onclick="authManager.logout()">
+                            <span class="material-icons">logout</span>
+                            退出登录
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 显示需要登录的功能
+        document.querySelectorAll('.requires-auth').forEach(element => {
+            element.style.display = '';
+        });
+    }
 
     // 登录
     async login(credentials) {
         try {
-            const response = await api.auth.login(credentials);
-            this.token = response.token;
-            storage.set('auth_token', this.token);
-            await this.loadUserProfile();
-            this.updateAuthUI();
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            this.token = data.token;
+            this.user = data.user;
+
+            localStorage.setItem('auth_token', this.token);
+            this.updateUIForUser();
+
             return true;
         } catch (error) {
             console.error('Login failed:', error);
             throw error;
         }
-    },
+    }
 
     // 注册
     async register(userData) {
         try {
-            const response = await api.auth.register(userData);
-            this.token = response.token;
-            storage.set('auth_token', this.token);
-            await this.loadUserProfile();
-            this.updateAuthUI();
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+
+            const data = await response.json();
+            this.token = data.token;
+            this.user = data.user;
+
+            localStorage.setItem('auth_token', this.token);
+            this.updateUIForUser();
+
             return true;
         } catch (error) {
             console.error('Registration failed:', error);
             throw error;
         }
-    },
+    }
 
     // 登出
-    async logout() {
-        try {
-            await api.auth.logout();
-        } catch (error) {
-            console.error('Logout failed:', error);
-        } finally {
-            this.token = null;
-            this.user = null;
-            this.isAuthenticated = false;
-            storage.remove('auth_token');
-            this.updateAuthUI();
-            window.location.href = '/login.html';
-        }
-    },
-
-    // 加载用户信息
-    async loadUserProfile() {
-        try {
-            const profile = await api.auth.getProfile();
-            this.user = profile;
-            this.isAuthenticated = true;
-            this.updateAuthUI();
-        } catch (error) {
-            console.error('Failed to load user profile:', error);
-            this.handleAuthError(error);
-        }
-    },
-
-    // 更新用户信息
-    async updateProfile(profileData) {
-        try {
-            const updatedProfile = await api.auth.updateProfile(profileData);
-            this.user = updatedProfile;
-            this.updateAuthUI();
-            return true;
-        } catch (error) {
-            console.error('Failed to update profile:', error);
-            throw error;
-        }
-    },
-
-    // 检查认证状态
-    checkAuth() {
-        if (!this.isAuthenticated) {
-            const currentPath = window.location.pathname;
-            const publicPaths = ['/login.html', '/register.html', '/index.html', '/'];
-            
-            if (!publicPaths.includes(currentPath)) {
-                window.location.href = '/login.html?redirect=' + encodeURIComponent(currentPath);
-            }
-        }
-    },
-
-    // 设置认证监听器
-    setupAuthListeners() {
-        // 监听存储变化（多标签页同步）
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'auth_token') {
-                if (!e.newValue) {
-                    this.handleLogout();
-                } else if (e.newValue !== this.token) {
-                    this.token = e.newValue;
-                    this.loadUserProfile();
-                }
-            }
-        });
-
-        // 监听 API 请求错误
-        document.addEventListener('unauthorized', () => {
-            this.handleAuthError();
-        });
-    },
-
-    // 处理认证错误
-    handleAuthError(error) {
+    logout() {
         this.token = null;
         this.user = null;
-        this.isAuthenticated = false;
-        storage.remove('auth_token');
-        this.updateAuthUI();
+        localStorage.removeItem('auth_token');
+        this.updateUIForGuest();
 
-        if (error?.response?.status === 401) {
-            const currentPath = window.location.pathname;
-            window.location.href = `/login.html?redirect=${encodeURIComponent(currentPath)}`;
+        // 如果在需要认证的页面，重定向到登录页
+        const requiresAuth = document.body.classList.contains('requires-auth');
+        if (requiresAuth) {
+            const currentPath = encodeURIComponent(window.location.pathname);
+            window.location.href = `/login.html?redirect=${currentPath}`;
         }
-    },
-
-    // 更新 UI 显示
-    updateAuthUI() {
-        const userMenu = document.querySelector('.user-menu');
-        if (!userMenu) return;
-
-        if (this.isAuthenticated) {
-            userMenu.innerHTML = `
-                <div class="user-dropdown">
-                    <button class="user-dropdown-btn">
-                        <img src="${this.user.avatar || 'images/default-avatar.jpg'}" alt="用户头像">
-                        <span>${this.user.name}</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/user-center.html">个人中心</a>
-                        <a href="/orders.html">我的订单</a>
-                        <a href="#" class="logout-btn">退出登录</a>
-                    </div>
-                </div>
-            `;
-
-            // 添加退出登录事件
-            userMenu.querySelector('.logout-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                this.logout();
-            });
-        } else {
-            userMenu.innerHTML = `
-                <a href="/login.html">
-                    <span class="material-icons">person</span>
-                </a>
-            `;
-        }
-    },
-
-    // 获取重定向 URL
-    getRedirectUrl() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('redirect') || '/';
-    },
-
-    // 处理登出
-    handleLogout() {
-        this.token = null;
-        this.user = null;
-        this.isAuthenticated = false;
-        storage.remove('auth_token');
-        this.updateAuthUI();
     }
-};
 
-// 导出认证模块
-export default auth; 
+    // 检查是否已登录
+    isAuthenticated() {
+        return !!this.token;
+    }
+
+    // 获取用户信息
+    getUser() {
+        return this.user;
+    }
+
+    // 获取认证令牌
+    getToken() {
+        return this.token;
+    }
+
+    // 刷新用户信息
+    async refreshUserInfo() {
+        if (!this.token) return;
+
+        try {
+            const response = await fetch('/api/user/profile', {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to refresh user info');
+            }
+
+            const data = await response.json();
+            this.user = data.user;
+            this.updateUIForUser();
+        } catch (error) {
+            console.error('Failed to refresh user info:', error);
+        }
+    }
+}
+
+// 创建认证管理实例
+const authManager = new AuthManager();
+
+export default authManager; 

@@ -3,6 +3,13 @@ class ImageViewer {
     constructor() {
         this.createViewer();
         this.bindEvents();
+
+        // 添加新的属性
+        this.preloadedImages = new Set();
+        this.scale = 1;
+        this.translateX = 0;
+        this.translateY = 0;
+        this.isMoving = false;
     }
 
     // 创建预览器DOM
@@ -213,6 +220,160 @@ class ImageViewer {
                 this.update();
             });
         });
+    }
+
+    // 添加图片预加载功能
+    preloadImages(images) {
+        images.forEach(src => {
+            if (this.preloadedImages.has(src)) return;
+
+            const img = new Image();
+            img.src = src;
+            img.onload = () => {
+                this.preloadedImages.add(src);
+            };
+        });
+    }
+
+    // 添加放大镜效果
+    initMagnifier() {
+        const magnifier = document.createElement('div');
+        magnifier.className = 'image-magnifier';
+        this.viewer.appendChild(magnifier);
+
+        this.image.addEventListener('mousemove', (e) => {
+            if (this.scale > 1) return;
+
+            const rect = this.image.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            magnifier.style.left = `${x}px`;
+            magnifier.style.top = `${y}px`;
+            magnifier.style.backgroundImage = `url(${this.image.src})`;
+            magnifier.style.backgroundPosition = `-${x * 2}px -${y * 2}px`;
+            magnifier.style.display = 'block';
+        });
+
+        this.image.addEventListener('mouseleave', () => {
+            magnifier.style.display = 'none';
+        });
+    }
+
+    // 添加手势支持
+    initGestureSupport() {
+        let startDistance = 0;
+        let initialScale = 1;
+
+        this.viewer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                startDistance = this.getDistance(e.touches[0], e.touches[1]);
+                initialScale = this.scale;
+                e.preventDefault();
+            }
+        });
+
+        this.viewer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                const currentDistance = this.getDistance(e.touches[0], e.touches[1]);
+                const scaleDiff = currentDistance / startDistance;
+                this.scale = Math.min(Math.max(initialScale * scaleDiff, 1), 3);
+                this.updateImageTransform();
+                e.preventDefault();
+            }
+        });
+    }
+
+    // 计算两点之间的距离
+    getDistance(touch1, touch2) {
+        return Math.hypot(
+            touch1.clientX - touch2.clientX,
+            touch1.clientY - touch2.clientY
+        );
+    }
+
+    // 更新图片变换
+    updateImageTransform() {
+        this.image.style.transform = `
+            translate(${this.translateX}px, ${this.translateY}px) 
+            scale(${this.scale})
+        `;
+    }
+
+    // 添加图片切换动画
+    switchImage(index) {
+        const currentImage = this.images[this.currentIndex];
+        const nextImage = this.images[index];
+        const direction = index > this.currentIndex ? 1 : -1;
+
+        // 创建动画容器
+        const animContainer = document.createElement('div');
+        animContainer.className = 'image-switch-animation';
+        this.viewer.appendChild(animContainer);
+
+        // 添加当前图片和下一张图片
+        animContainer.innerHTML = `
+            <img src="${currentImage}" class="current" style="transform: translateX(0)">
+            <img src="${nextImage}" class="next" style="transform: translateX(${100 * direction}%)">
+        `;
+
+        // 触发动画
+        requestAnimationFrame(() => {
+            const imgs = animContainer.querySelectorAll('img');
+            imgs[0].style.transform = `translateX(${-100 * direction}%)`;
+            imgs[1].style.transform = 'translateX(0)';
+        });
+
+        // 动画结束后清理
+        setTimeout(() => {
+            this.image.src = nextImage;
+            animContainer.remove();
+            this.currentIndex = index;
+            this.updateThumbnails();
+        }, 300);
+    }
+
+    // 添加键盘快捷键支持
+    initKeyboardSupport() {
+        document.addEventListener('keydown', (e) => {
+            if (!this.isActive) return;
+
+            switch (e.key) {
+                case 'ArrowLeft':
+                    this.prev();
+                    break;
+                case 'ArrowRight':
+                    this.next();
+                    break;
+                case '+':
+                    this.zoomIn();
+                    break;
+                case '-':
+                    this.zoomOut();
+                    break;
+                case 'r':
+                    this.resetZoom();
+                    break;
+            }
+        });
+    }
+
+    // 缩放控制
+    zoomIn() {
+        this.scale = Math.min(this.scale + 0.2, 3);
+        this.updateImageTransform();
+    }
+
+    zoomOut() {
+        this.scale = Math.max(this.scale - 0.2, 1);
+        this.updateImageTransform();
+    }
+
+    resetZoom() {
+        this.scale = 1;
+        this.translateX = 0;
+        this.translateY = 0;
+        this.updateImageTransform();
     }
 }
 

@@ -3,75 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>产品系列 - Future Furniture</title>
+    <title>产品分类 - Future Furniture</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="Future Furniture - 科技与艺术的完美融合，为您打造智能舒适的现代生活空间。">
 </head>
 <body>
-    <!-- 导航栏相同 -->
-    
-    <main class="category-page">
-        <div class="filters-section">
-            <h2>筛选</h2>
-            <div class="filter-group">
-                <h3>产品分类</h3>
-                <label><input type="checkbox" name="category" value="living"> 客厅家具</label>
-                <label><input type="checkbox" name="category" value="bedroom"> 卧室家具</label>
-                <label><input type="checkbox" name="category" value="office"> 办公家具</label>
-                <label><input type="checkbox" name="category" value="dining"> 餐厅家具</label>
+    <!-- 页面加载指示器 -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <!-- 导航栏内容与 index.html 相同 -->
+    </nav>
+
+    <main class="categories-page">
+        <!-- 分类导航 -->
+        <div class="category-nav">
+            <div class="container">
+                <div class="category-breadcrumb">
+                    <div class="breadcrumb-item">
+                        <a href="index.html">首页</a>
+                        <span class="material-icons">chevron_right</span>
+                    </div>
+                    <div class="breadcrumb-item active">全部商品</div>
+                </div>
             </div>
-            
-            <div class="filter-group">
-                <h3>价格区间</h3>
-                <div class="price-range">
-                    <input type="range" min="0" max="10000" step="100" class="price-slider">
-                    <div class="price-inputs">
-                        <input type="number" class="min-price" placeholder="最低价">
-                        <span>-</span>
-                        <input type="number" class="max-price" placeholder="最高价">
+        </div>
+
+        <div class="container">
+            <!-- 分类筛选器 -->
+            <div class="category-filters">
+                <button class="category-tag">全部</button>
+                <button class="filter-tag">客厅家具</button>
+                <button class="filter-tag">卧室家具</button>
+                <button class="filter-tag">办公家具</button>
+                <button class="filter-tag">餐厅家具</button>
+                <button class="filter-tag">智能家具</button>
+                <button class="filter-tag">新品上市</button>
+            </div>
+
+            <!-- 分类内容区 -->
+            <div class="category-content">
+                <!-- 侧边筛选栏 -->
+                <div class="filter-sidebar">
+                    <!-- 价格范围筛选 -->
+                    <div class="filter-section">
+                        <h3>价格范围</h3>
+                        <div class="price-range">
+                            <div class="range-slider" data-min="0" data-max="10000">
+                                <div class="range-fill"></div>
+                                <div class="range-handle" data-handle="min"></div>
+                                <div class="range-handle" data-handle="max"></div>
+                            </div>
+                            <div class="price-inputs">
+                                <div class="input-group">
+                                    <span class="currency">¥</span>
+                                    <input type="number" class="price-input" id="minPrice" placeholder="最低价" min="0">
+                                </div>
+                                <span class="separator">-</span>
+                                <div class="input-group">
+                                    <span class="currency">¥</span>
+                                    <input type="number" class="price-input" id="maxPrice" placeholder="最高价" max="10000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 品牌筛选 -->
+                    <div class="filter-section">
+                        <h3>品牌</h3>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" name="brand" value="future">
+                                <span class="checkmark"></span>
+                                <span class="option-text">Future Furniture</span>
+                                <span class="option-count">120</span>
+                            </label>
+                            <!-- 更多品牌选项 -->
+                        </div>
+                    </div>
+
+                    <!-- 材质筛选 -->
+                    <div class="filter-section">
+                        <h3>材质</h3>
+                        <div class="category-filters">
+                            <label class="filter-option">
+                                <input type="checkbox" name="material">
+                                <span>实木</span>
+                                <span class="filter-count">68</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="material">
+                                <span>金属</span>
+                                <span class="filter-count">45</span>
+                            </label>
+                            <!-- 更多材质选项 -->
+                        </div>
+                    </div>
+
+                    <!-- 排序和分页控件 -->
+                    <div class="results-header">
+                        <div class="sort-options">
+                            <select class="sort-select" id="sortSelect">
+                                <option value="default">默认排序</option>
+                                <option value="price-asc">价格从低到高</option>
+                                <option value="price-desc">价格从高到低</option>
+                                <option value="newest">最新上架</option>
+                                <option value="popular">最受欢迎</option>
+                            </select>
+                        </div>
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid">
+                                <span class="material-icons">grid_view</span>
+                            </button>
+                            <button class="view-btn" data-view="list">
+                                <span class="material-icons">view_list</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 分页控件 -->
+                    <div class="pagination">
+                        <button class="page-btn prev" disabled>
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <div class="page-numbers">
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <span class="page-dots">...</span>
+                            <button class="page-btn">10</button>
+                        </div>
+                        <button class="page-btn next">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <!-- 加载状态指示器 -->
+                    <div class="loading-overlay">
+                        <div class="loader-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- 商品展示区 -->
+                <div class="products-section">
+                    <!-- 商品网格 -->
+                    <div class="products-grid">
+                        <!-- 商品卡片 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="badge new">新品</span>
+                                <span class="badge discount">-20%</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="images/chair.jpg" alt="智能人体工学椅" loading="lazy">
+                                <div class="product-actions">
+                                    <button class="action-btn quick-view" title="快速预览">
+                                        <span class="material-icons">visibility</span>
+                                    </button>
+                                    <button class="action-btn add-to-favorite" title="添加收藏">
+                                        <span class="material-icons">favorite_border</span>
+                                    </button>
+                                    <button class="action-btn add-to-cart" title="加入购物车">
+                                        <span class="material-icons">shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">智能人体工学椅</h3>
+                                <div class="product-rating">
+                                    <div class="stars">★★★★★</div>
+                                    <span class="rating-count">(128)</span>
+                                </div>
+                                <p class="product-description">自适应脊椎支撑，智能温度调节</p>
+                                <div class="product-price">
+                                    <span class="current-price">¥2,999</span>
+                                    <span class="original-price">¥3,999</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 更多商品卡片 -->
                     </div>
                 </div>
             </div>
-            
-            <div class="filter-group">
-                <h3>颜色</h3>
-                <div class="color-options">
-                    <span class="color-option" style="background: #000000;"></span>
-                    <span class="color-option" style="background: #FFFFFF;"></span>
-                    <span class="color-option" style="background: #8B4513;"></span>
-                    <span class="color-option" style="background: #808080;"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="products-section">
-            <div class="products-header">
-                <h1>全部产品</h1>
-                <div class="sort-options">
-                    <select>
-                        <option value="default">默认排序</option>
-                        <option value="price-low">价格从低到高</option>
-                        <option value="price-high">价格从高到低</option>
-                        <option value="newest">最新上架</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="product-grid">
-                <!-- 产品卡片会通过 JavaScript 动态生成 -->
-            </div>
-
-            <div class="pagination">
-                <button class="prev-page">上一页</button>
-                <div class="page-numbers">
-                    <span class="active">1</span>
-                    <span>2</span>
-                    <span>3</span>
-                </div>
-                <button class="next-page">下一页</button>
-            </div>
         </div>
     </main>
+
+    <!-- 页脚 -->
+    <footer class="main-footer">
+        <!-- 页脚内容与 index.html 相同 -->
+    </footer>
+
+    <!-- 购物车弹出层 -->
+    <div class="cart-popup">
+        <div class="cart-header">
+            <h3>购物车</h3>
+            <button class="close-cart">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="cart-items">
+            <!-- 购物车商品将通过 JavaScript 动态加载 -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>合计：</span>
+                <span class="total-amount">¥0</span>
+            </div>
+            <button class="btn btn-primary checkout-btn">去结算</button>
+        </div>
+    </div>
+
+    <script src="utils.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+    <script src="categories.js" type="module"></script>
 </body>
 </html> 

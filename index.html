@@ -3,316 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>未来家具 - 现代生活的选择</title>
+    <title>Future Furniture - 现代生活的选择</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-loader.fade-out {
+            opacity: 0;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <!-- 页面加载指示器 -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">加载中...</div>
+    </div>
+
+    <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">Future Furniture</a>
-            <div class="nav-content">
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">首页</a></li>
-                    <li><a href="categories.html">产品系列</a></li>
-                    <li><a href="about.html">关于我们</a></li>
-                    <li><a href="contact.html">联系我们</a></li>
-                </ul>
-                <div class="search-box">
-                    <div class="search-container">
-                        <input type="text" placeholder="搜索产品..." id="searchInput">
-                        <button class="search-btn">
-                            <span class="material-icons">search</span>
-                        </button>
-                    </div>
-                    <div class="search-results" id="searchResults"></div>
+        <div class="logo">Future Furniture</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">首页</a></li>
+            <li class="dropdown">
+                <a href="categories.html">产品系列</a>
+                <div class="dropdown-menu">
+                    <a href="categories.html?type=living">客厅家具</a>
+                    <a href="categories.html?type=bedroom">卧室家具</a>
+                    <a href="categories.html?type=office">办公家具</a>
+                    <a href="categories.html?type=dining">餐厅家具</a>
                 </div>
-                <div class="nav-actions">
-                    <div class="cart-icon">
-                        <a href="cart.html">
-                            <span class="material-icons">shopping_cart</span>
-                            <span class="cart-count">0</span>
-                        </a>
-                    </div>
-                    <div class="user-menu">
-                        <a href="login.html">
-                            <span class="material-icons">person</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+            <li class="search-box">
+                <input type="text" placeholder="搜索产品...">
+                <button class="search-btn">
+                    <span class="material-icons">search</span>
+                </button>
+            </li>
+            <li class="cart-icon">
+                <a href="cart.html">
+                    <span class="material-icons">shopping_cart</span>
+                    <span class="cart-count">0</span>
+                </a>
+            </li>
+            <li class="user-menu">
+                <a href="login.html">
+                    <span class="material-icons">person</span>
+                </a>
+            </li>
+        </ul>
+        <button class="mobile-menu-btn">
+            <span class="material-icons">menu</span>
+        </button>
     </nav>
 
-    <header class="hero">
-        <div class="hero-slider">
-            <div class="slide active">
-                <div class="slide-content">
-                    <h1>重新定义现代家居</h1>
-                    <p>科技与艺术的完美融合</p>
-                    <button class="cta-button">探索系列</button>
-                </div>
-                <img src="images/hero-1.jpg" alt="现代家居">
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo">Future Furniture</div>
+            <button class="close-menu">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="mobile-menu-content">
+            <div class="mobile-search">
+                <input type="text" placeholder="搜索产品...">
+                <button class="search-btn">
+                    <span class="material-icons">search</span>
+                </button>
             </div>
-            <div class="slide">
-                <div class="slide-content">
-                    <h1>智能办公空间</h1>
-                    <p>提升工作效率，关注健康生活</p>
-                    <button class="cta-button">了解更多</button>
+            <nav class="mobile-nav">
+                <a href="index.html" class="active">首页</a>
+                <div class="mobile-dropdown">
+                    <div class="dropdown-toggle">
+                        产品系列
+                        <span class="material-icons">expand_more</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="categories.html?type=living">客厅家具</a>
+                        <a href="categories.html?type=bedroom">卧室家具</a>
+                        <a href="categories.html?type=office">办公家具</a>
+                        <a href="categories.html?type=dining">餐厅家具</a>
+                    </div>
                 </div>
-                <img src="images/hero-2.jpg" alt="办公空间">
-            </div>
-            <div class="slider-controls">
-                <button class="prev-slide"><span class="material-icons">chevron_left</span></button>
-                <div class="slide-dots"></div>
-                <button class="next-slide"><span class="material-icons">chevron_right</span></button>
+                <a href="about.html">关于我们</a>
+                <a href="contact.html">联系我们</a>
+            </nav>
+            <div class="mobile-user-actions">
+                <a href="login.html" class="btn btn-outline">登录</a>
+                <a href="register.html" class="btn btn-primary">注册</a>
             </div>
         </div>
-    </header>
+    </div>
 
+    <!-- 主要内容区 -->
     <main>
-        <section class="categories-preview">
-            <h2>浏览分类</h2>
-            <div class="category-grid">
-                <a href="categories.html?type=living" class="category-card">
-                    <img src="images/living-room.jpg" alt="客厅家具">
-                    <div class="category-info">
-                        <h3>客厅家具</h3>
-                        <span class="material-icons">arrow_forward</span>
+        <!-- 轮播图区域 -->
+        <section class="hero-slider" data-auto-play="true" data-interval="5000">
+            <div class="slider-container" data-touch="true">
+                <div class="slide active">
+                    <img src="images/hero-1.jpg" alt="现代家居">
+                    <div class="slide-content">
+                        <h1 class="slide-title">重新定义现代家居</h1>
+                        <p class="slide-description">科技与艺术的完美融合</p>
+                        <button class="btn btn-primary">探索系列</button>
                     </div>
-                </a>
-                <a href="categories.html?type=office" class="category-card">
-                    <img src="images/office.jpg" alt="办公家具">
-                    <div class="category-info">
-                        <h3>办公家具</h3>
-                        <span class="material-icons">arrow_forward</span>
+                </div>
+                <div class="slide">
+                    <img src="images/hero-2.jpg" alt="智能办公">
+                    <div class="slide-content">
+                        <h1>智能办公空间</h1>
+                        <p>提升工作效率的专业择</p>
+                        <button class="cta-button">了解更多</button>
                     </div>
-                </a>
-                <a href="categories.html?type=bedroom" class="category-card">
-                    <img src="images/bedroom.jpg" alt="卧室家具">
-                    <div class="category-info">
-                        <h3>卧室家具</h3>
-                        <span class="material-icons">arrow_forward</span>
+                </div>
+                <div class="slide">
+                    <img src="images/hero-3.jpg" alt="品质生活">
+                    <div class="slide-content">
+                        <h1>品质生活美学</h1>
+                        <p>为理想生活空间而设计</p>
+                        <button class="cta-button">立即选购</button>
                     </div>
-                </a>
+                </div>
+            </div>
+            <button class="slider-btn prev">
+                <span class="material-icons">chevron_left</span>
+            </button>
+            <button class="slider-btn next">
+                <span class="material-icons">chevron_right</span>
+            </button>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </section>
 
+        <!-- 产品分类区 -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">产品分类</h2>
+                <div class="category-grid">
+                    <a href="categories.html?type=living" class="category-card">
+                        <img src="images/living-room.jpg" alt="客厅家具">
+                        <div class="category-content">
+                            <h3>客厅家具</h3>
+                            <p>打造温馨舒适的生活空间</p>
+                        </div>
+                    </a>
+                    <a href="categories.html?type=bedroom" class="category-card">
+                        <img src="images/bedroom.jpg" alt="卧室家具">
+                        <div class="category-content">
+                            <h3>卧室家具</h3>
+                            <p>享受优质睡眠体验</p>
+                        </div>
+                    </a>
+                    <a href="categories.html?type=office" class="category-card">
+                        <img src="images/office.jpg" alt="办公家具">
+                        <div class="category-content">
+                            <h3>办公家具</h3>
+                            <p>提升工作效率的专业选择</p>
+                        </div>
+                    </a>
+                    <a href="categories.html?type=dining" class="category-card">
+                        <img src="images/dining.jpg" alt="餐厅家具">
+                        <div class="category-content">
+                            <h3>餐厅家具</h3>
+                            <p>品味生活每一刻</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 精选商品区 -->
         <section class="featured-products">
-            <div class="section-header">
-                <h2>精选系列</h2>
-                <a href="categories.html" class="view-all">查看全部 <span class="material-icons">arrow_forward</span></a>
-            </div>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="images/chair.jpg" alt="智能办公椅">
-                        <div class="product-actions">
-                            <button class="quick-view" data-product-id="1">
-                                <span class="material-icons">visibility</span>
-                            </button>
-                            <button class="add-to-cart" data-product-id="1">
-                                <span class="material-icons">shopping_cart</span>
-                            </button>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">精选商品</h2>
+                    <div class="section-controls">
+                        <div class="category-tabs">
+                            <button class="tab active" data-category="all">全部</button>
+                            <button class="tab" data-category="new">新品</button>
+                            <button class="tab" data-category="hot">热销</button>
+                            <button class="tab" data-category="sale">特惠</button>
                         </div>
-                    </div>
-                    <div class="product-info">
-                        <h3>智能人体工学椅</h3>
-                        <p class="product-description">自适应脊椎支撑，智能温度调节</p>
-                        <div class="product-price">
-                            <span class="price">¥2,999</span>
-                            <button class="primary-button">了解详情</button>
+                        <div class="slider-controls">
+                            <button class="prev-btn">
+                                <span class="material-icons">chevron_left</span>
+                            </button>
+                            <button class="next-btn">
+                                <span class="material-icons">chevron_right</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <!-- 更多产品卡片 -->
+
+                <div class="products-slider">
+                    <div class="product-card" data-product-id="1">
+                        <div class="product-badges">
+                            <span class="badge new">新品</span>
+                            <span class="badge discount">-20%</span>
+                        </div>
+                        <div class="product-image">
+                            <img src="images/chair.jpg" alt="智能人体工学椅" loading="lazy">
+                            <div class="product-actions">
+                                <button class="action-btn quick-view" title="快速预览" data-product-id="1">
+                                    <span class="material-icons">visibility</span>
+                                </button>
+                                <button class="action-btn add-to-favorite" title="添加收藏" data-product-id="1">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                                <button class="action-btn add-to-cart" title="加入购物车" data-product-id="1">
+                                    <span class="material-icons">shopping_cart</span>
+                                    <span class="loading-spinner"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">智能人体工学椅</h3>
+                            <div class="product-rating">
+                                <div class="stars">★★★★★</div>
+                                <span class="rating-count">(128)</span>
+                            </div>
+                            <p class="product-description">自适应脊椎支撑，智能温度调节</p>
+                            <div class="product-price">
+                                <span class="current-price">¥2,999</span>
+                                <span class="original-price">¥3,999</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 更多产品卡片 -->
+                </div>
             </div>
         </section>
 
+        <!-- 促销活动区 -->
+        <section class="promotions">
+            <div class="container">
+                <div class="promotion-grid">
+                    <div class="promotion-card large">
+                        <img src="images/promo-1.jpg" alt="限时特惠">
+                        <div class="promotion-content">
+                            <h3>夏季特惠</h3>
+                            <p>精选办公家具 8折起</p>
+                            <span class="time-left">剩余 3 天</span>
+                            <a href="categories.html?promotion=summer" class="promo-btn">立即抢购</a>
+                        </div>
+                    </div>
+                    <div class="promotion-card">
+                        <img src="images/promo-2.jpg" alt="新品上市">
+                        <div class="promotion-content">
+                            <h3>新品首发</h3>
+                            <p>智能家居系列</p>
+                            <a href="categories.html?type=smart" class="promo-btn">了解更多</a>
+                        </div>
+                    </div>
+                    <div class="promotion-card">
+                        <img src="images/promo-3.jpg" alt="会员专享">
+                        <div class="promotion-content">
+                            <h3>会员专享</h3>
+                            <p>尊享9.5折优惠</p>
+                            <a href="user-center.html" class="promo-btn">立即加入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新品上市区 -->
+        <section class="new-arrivals">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">新品上市</h2>
+                    <a href="categories.html?type=new" class="view-all">
+                        查看全部 <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+                
+                <div class="new-products-grid">
+                    <div class="new-product-card featured">
+                        <div class="product-image">
+                            <img src="images/new-product-1.jpg" alt="智能温控床垫" loading="lazy">
+                            <div class="product-tag">新品首发</div>
+                        </div>
+                        <div class="product-info">
+                            <h3>智能温控床垫</h3>
+                            <p>AI温度调节，助你好眠</p>
+                            <div class="price">¥4,999</div>
+                            <button class="preview-btn">预览</button>
+                        </div>
+                    </div>
+
+                    <div class="new-product-list">
+                        <div class="new-product-item">
+                            <img src="images/new-product-2.jpg" alt="多功能沙发" loading="lazy">
+                            <div class="item-info">
+                                <h4>多功能沙发</h4>
+                                <p>模块化设计，自由组合</p>
+                                <div class="price">¥3,299</div>
+                            </div>
+                        </div>
+                        <!-- 更多新品项目 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 品牌优势区 -->
         <section class="features">
-            <h2>为什么选择我们</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="material-icons">psychology</span>
-                    <h3>科技创新</h3>
-                    <p>融入智能科技，提升生活品质</p>
-                </div>
-                <div class="feature-card">
-                    <span class="material-icons">eco</span>
-                    <h3>环保材质</h3>
-                    <p>可持续发展，对环境负责</p>
-                </div>
-                <div class="feature-card">
-                    <span class="material-icons">accessibility</span>
-                    <h3>人体工学</h3>
-                    <p>专注健康，追求舒适体验</p>
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-icons">verified_user</span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>品质保证</h3>
+                            <p>严选优质材料，匠心制作</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-icons">local_shipping</span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>免费配送</h3>
+                            <p>满2000元免费配送</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-icons">support_agent</span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>专业服务</h3>
+                            <p>7×24小时客服支持</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-icons">autorenew</span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>无忧退换</h3>
+                            <p>7天无理由退换</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="testimonials">
-            <h2>用户评价</h2>
-            <div class="testimonials-slider">
-                <div class="testimonial-card">
-                    <div class="user-avatar">
-                        <img src="images/user1.jpg" alt="用户头像">
-                    </div>
-                    <p class="testimonial-text">"智能办公椅真的改善了我的工作体验，腰部支撑非常舒适。"</p>
-                    <div class="user-info">
-                        <h4>张先生</h4>
-                        <p>产品经理</p>
-                    </div>
-                </div>
-                <!-- 更多评价卡片 -->
-            </div>
-        </section>
-
+        <!-- 订阅区域 -->
         <section class="newsletter">
-            <div class="newsletter-content">
-                <h2>订阅我们</h2>
-                <p>获取最新产品信息和独家优惠</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="输入您的邮箱地址" required>
-                    <button type="submit" class="submit-btn">订阅</button>
-                </form>
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>订阅我们</h2>
+                    <p>订阅获取最新产品信息和独家优惠</p>
+                    <form class="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" placeholder="请输入您的邮箱" required>
+                            <button type="submit">
+                                订阅 <span class="material-icons">arrow_forward</span>
+                            </button>
+                        </div>
+                        <div class="form-note">
+                            <label>
+                                <input type="checkbox" required>
+                                我同意接收品和活动相关的邮件
+                            </label>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>联系我们</h4>
-                <p>邮箱：contact@futurefurniture.com</p>
-                <p>电话：400-888-8888</p>
-                <p>地址：北京市朝阳区未来大厦B座</p>
-            </div>
-            <div class="footer-section">
-                <h4>快速链接</h4>
-                <ul>
-                    <li><a href="about.html">关于我们</a></li>
-                    <li><a href="categories.html">产品系列</a></li>
-                    <li><a href="contact.html">联系我们</a></li>
-                    <li><a href="#">隐私政策</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>关注我们</h4>
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <span class="material-icons">wechat</span>
-                    </a>
-                    <a href="#" class="social-link">
-                        <span class="material-icons">facebook</span>
-                    </a>
-                    <a href="#" class="social-link">
-                        <span class="material-icons">instagram</span>
-                    </a>
+    <!-- 页脚部分 -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- 公司信息 -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="Future Furniture">
+                    </div>
+                    <p class="company-desc">科技与艺术的完美融合，为您打造智能舒适的现代生活空间。</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <span class="material-icons">wechat</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="material-icons">facebook</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="material-icons">instagram</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 快速链接 -->
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="categories.html">产品系列</a></li>
+                        <li><a href="contact.html">联系我们</a></li>
+                        <li><a href="blog.html">家居博客</a></li>
+                    </ul>
+                </div>
+
+                <!-- 帮助中心 -->
+                <div class="footer-section">
+                    <h4>帮助中心</h4>
+                    <ul class="footer-links">
+                        <li><a href="shipping.html">配送说明</a></li>
+                        <li><a href="returns.html">退换政策</a></li>
+                        <li><a href="warranty.html">保服务</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                    </ul>
+                </div>
+
+                <!-- 联系方式 -->
+                <div class="footer-section">
+                    <h4>联系我们</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <span class="material-icons">location_on</span>
+                            <span>北京市朝阳区未来大厦B座</span>
+                        </li>
+                        <li>
+                            <span class="material-icons">phone</span>
+                            <span>400-888-8888</span>
+                        </li>
+                        <li>
+                            <span class="material-icons">email</span>
+                            <span>service@futurefurniture.com</span>
+                        </li>
+                        <li>
+                            <span class="material-icons">access_time</span>
+                            <span>周至周日 9:00-21:00</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Future Furniture. All rights reserved.</p>
+
+            <!-- 支付方式和认证 -->
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <img src="images/payment/alipay.png" alt="支付宝">
+                    <img src="images/payment/wechat.png" alt="微信支付">
+                    <img src="images/payment/unionpay.png" alt="银联">
+                </div>
+                <div class="certifications">
+                    <img src="images/cert/cert1.png" alt="认证1">
+                    <img src="images/cert/cert2.png" alt="认证2">
+                </div>
+            </div>
+
+            <!-- 版权信息 -->
+            <div class="copyright">
+                <p>&copy; 2024 Future Furniture. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="privacy.html">隐私政策</a>
+                    <a href="terms.html">使用条款</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="main.js"></script>
-
-    <!-- 快速预览模态框 -->
-    <div class="quick-view-modal" id="quickViewModal">
-        <div class="modal-content">
-            <button class="close-modal">
-                <span class="material-icons">close</span>
-            </button>
-            <div class="modal-body">
-                <div class="product-preview">
-                    <img src="" alt="产品预览" id="modalProductImage">
-                </div>
-                <div class="product-details">
-                    <h2 id="modalProductName"></h2>
-                    <p id="modalProductDescription"></p>
-                    <div class="product-options">
-                        <div class="color-selection">
-                            <h3>选择颜色</h3>
-                            <div class="color-options">
-                                <span class="color-option" style="background: #000000;" data-color="black"></span>
-                                <span class="color-option" style="background: #FFFFFF;" data-color="white"></span>
-                                <span class="color-option" style="background: #808080;" data-color="gray"></span>
-                            </div>
-                        </div>
-                        <div class="quantity-selector">
-                            <h3>数量</h3>
-                            <div class="quantity-controls">
-                                <button class="decrease">-</button>
-                                <input type="number" value="1" min="1" max="99">
-                                <button class="increase">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-actions">
-                        <button class="add-to-cart-btn">加入购物车</button>
-                        <button class="view-details-btn">查看详情</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- 购物车弹出层 -->
+    <div class="cart-popup">
+        <!-- 购物车内容 -->
     </div>
 
-    <div class="cart-popup" id="cartPopup">
-        <div class="cart-popup-header">
-            <h3>购物车</h3>
-            <button class="close-cart">
-                <span class="material-icons">close</span>
-            </button>
-        </div>
-        <div class="cart-popup-items">
-            <!-- 购物车商品将通过 JavaScript 动态添加 -->
-        </div>
-        <div class="cart-popup-footer">
-            <div class="cart-total">
-                <span>总计：</span>
-                <span class="total-amount">¥0</span>
-            </div>
-            <div class="cart-actions">
-                <button class="view-cart-btn">查看购物车</button>
-                <button class="checkout-btn">去结算</button>
-            </div>
-        </div>
-    </div>
-    <div class="cart-popup-overlay"></div>
-
-    <!-- 图片预览组件 -->
-    <div class="image-viewer" id="imageViewer">
-        <div class="viewer-overlay"></div>
-        <div class="viewer-container">
-            <button class="viewer-close">
-                <span class="material-icons">close</span>
-            </button>
-            <button class="viewer-prev">
-                <span class="material-icons">chevron_left</span>
-            </button>
-            <button class="viewer-next">
-                <span class="material-icons">chevron_right</span>
-            </button>
-            <div class="viewer-content">
-                <img src="" alt="预览图片">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="viewer-thumbnails"></div>
-            <div class="viewer-caption"></div>
-            <div class="zoom-controls">
-                <button class="zoom-btn zoom-in">
-                    <span class="material-icons">add</span>
-                </button>
-                <button class="zoom-btn zoom-out">
-                    <span class="material-icons">remove</span>
-                </button>
-                <button class="zoom-btn zoom-reset">
-                    <span class="material-icons">refresh</span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <script src="utils.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+    <script src="index.js" type="module"></script>
 </body>
 </html> 

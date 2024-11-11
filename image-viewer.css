@@ -1,4 +1,4 @@
-/* 图片查看器样式 */
+/* 图片查看器基础样式优化 */
 .image-viewer {
     position: fixed;
     top: 0;
@@ -10,6 +10,7 @@
     display: none;
     opacity: 0;
     transition: opacity 0.3s ease-out;
+    user-select: none;
 }
 
 .image-viewer.active {
@@ -17,145 +18,45 @@
     opacity: 1;
 }
 
-.viewer-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.viewer-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
+/* 图片容器样式优化 */
 .viewer-content {
     position: relative;
-    max-width: 90%;
-    max-height: 80vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .viewer-content img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%;
+    max-height: 90vh;
     object-fit: contain;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: grab;
 }
 
-.viewer-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 10;
-    padding: 10px;
-    transition: transform 0.3s;
-}
-
-.viewer-close:hover {
-    transform: rotate(90deg);
-}
-
-.viewer-prev,
-.viewer-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: white;
-    padding: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.viewer-prev {
-    left: 20px;
-}
-
-.viewer-next {
-    right: 20px;
-}
-
-.viewer-prev:hover,
-.viewer-next:hover {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-.viewer-thumbnails {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-}
-
-.thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    background-size: cover;
-    background-position: center;
-    transition: all 0.3s;
-}
-
-.thumbnail:hover {
-    transform: scale(1.1);
-}
-
-.thumbnail.active {
-    border-color: var(--accent-blue);
-    transform: scale(1.1);
-}
-
-.viewer-caption {
-    position: absolute;
-    bottom: 100px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: white;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s;
-}
-
-.viewer-container:hover .viewer-caption {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* 手势支持 */
-.viewer-content.dragging {
+.viewer-content img.dragging {
     cursor: grabbing;
+    transition: none;
 }
 
-/* 缩放控制 */
+/* 放大镜效果 */
+.image-magnifier {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 2px solid white;
+    border-radius: 50%;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: 1000px 1000px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+/* 缩放控制器 */
 .zoom-controls {
     position: absolute;
     bottom: 20px;
@@ -165,19 +66,78 @@
     background: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 20px;
+    z-index: 10;
 }
 
 .zoom-btn {
-    background: none;
+    width: 40px;
+    height: 40px;
     border: none;
+    background: rgba(255, 255, 255, 0.1);
     color: white;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 5px;
-    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 }
 
 .zoom-btn:hover {
-    transform: scale(1.2);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 图片切换动画 */
+.image-switch-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image-switch-animation img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease-out;
+}
+
+/* 缩略图导航优化 */
+.viewer-thumbnails {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.6;
+}
+
+.thumbnail:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.thumbnail.active {
+    border-color: #2979FF;
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 /* 加载动画 */
@@ -186,9 +146,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 255, 255, 0.3);
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     border-top-color: white;
     animation: spin 1s linear infinite;
@@ -200,23 +160,41 @@
     }
 }
 
+/* 手势提示 */
+.gesture-hint {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gesture-hint.show {
+    opacity: 1;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
-    .viewer-prev,
-    .viewer-next {
-        display: none;
+    .zoom-controls {
+        bottom: 70px;
     }
 
     .viewer-thumbnails {
         display: none;
     }
 
-    .viewer-caption {
-        bottom: 20px;
+    .image-magnifier {
+        display: none !important;
     }
 
-    .viewer-close {
-        top: 10px;
-        right: 10px;
+    .gesture-hint {
+        bottom: 70px;
     }
 } 

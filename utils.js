@@ -1,177 +1,72 @@
-// 全局加载状态管理
-const loadingState = {
-    isLoading: false,
-    loadingElement: null,
+const utils = {
+    // ... 现有的工具函数
 
-    show() {
-        if (this.isLoading) return;
-        
-        this.isLoading = true;
-        if (!this.loadingElement) {
-            this.loadingElement = document.createElement('div');
-            this.loadingElement.className = 'global-loading';
-            this.loadingElement.innerHTML = `
-                <div class="loading-spinner">
-                    <span class="material-icons loading">sync</span>
-                </div>
-            `;
-            document.body.appendChild(this.loadingElement);
-        }
-        this.loadingElement.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    },
+    form: {
+        // 显示表单错误
+        showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            if (!formGroup) return;
 
-    hide() {
-        if (!this.isLoading) return;
-        
-        this.isLoading = false;
-        if (this.loadingElement) {
-            this.loadingElement.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-};
-
-// 全局错误处理
-const errorHandler = {
-    show(message, type = 'error') {
-        const errorElement = document.createElement('div');
-        errorElement.className = `global-error ${type}`;
-        errorElement.innerHTML = `
-            <div class="error-content">
-                <span class="material-icons">${type === 'error' ? 'error' : 'warning'}</span>
-                <p>${message}</p>
-                <button class="close-error">
-                    <span class="material-icons">close</span>
-                </button>
-            </div>
-        `;
-
-        document.body.appendChild(errorElement);
-
-        // 自动关闭
-        setTimeout(() => {
-            errorElement.remove();
-        }, 5000);
-
-        // 点击关闭
-        errorElement.querySelector('.close-error').addEventListener('click', () => {
-            errorElement.remove();
-        });
-    },
-
-    handleApiError(error) {
-        console.error('API Error:', error);
-        this.show(error.message || '服务器错误，请稍后重试');
-    }
-};
-
-// 表单验证工具
-const formValidator = {
-    rules: {
-        required: {
-            validate: value => value.trim().length > 0,
-            message: '此字段为必填项'
+            const errorDiv = formGroup.querySelector('.form-feedback') || 
+                           this.createErrorElement(formGroup);
+            
+            input.classList.add('is-invalid');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
         },
-        email: {
-            validate: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-            message: '请输入有效的邮箱地址'
-        },
-        phone: {
-            validate: value => /^1[3-9]\d{9}$/.test(value),
-            message: '请输入有效的手机号码'
-        },
-        password: {
-            validate: value => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
-            message: '密码必须包含字母和数字，长度至少8位'
-        }
-    },
 
-    validateField(input) {
-        const rules = input.dataset.validate?.split(',') || [];
-        for (const rule of rules) {
-            const validator = this.rules[rule];
-            if (validator && !validator.validate(input.value)) {
-                return validator.message;
+        // 清除表单错误
+        clearError(input) {
+            const formGroup = input.closest('.form-group');
+            if (!formGroup) return;
+
+            const errorDiv = formGroup.querySelector('.form-feedback');
+            if (errorDiv) {
+                errorDiv.textContent = '';
+                errorDiv.style.display = 'none';
             }
-        }
-        return '';
-    },
+            input.classList.remove('is-invalid');
+        },
 
-    validateForm(form) {
-        let isValid = true;
-        const errors = {};
+        // 创建错误提示元素
+        createErrorElement(formGroup) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'form-feedback';
+            formGroup.appendChild(errorDiv);
+            return errorDiv;
+        },
 
-        form.querySelectorAll('[data-validate]').forEach(input => {
-            const error = this.validateField(input);
-            if (error) {
-                isValid = false;
-                errors[input.name] = error;
-                this.showError(input, error);
-            } else {
-                this.clearError(input);
-            }
-        });
+        // 验证必填字段
+        validateRequired(input) {
+            return input.value.trim() !== '';
+        },
 
-        return { isValid, errors };
-    },
+        // 验证邮箱
+        validateEmail(input) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(input.value.trim());
+        },
 
-    showError(input, message) {
-        const errorElement = input.parentElement.querySelector('.error-message')
-            || this.createErrorElement(input);
-        errorElement.textContent = message;
-        input.classList.add('error');
-    },
+        // 验证手机号
+        validatePhone(input) {
+            const re = /^1[3-9]\d{9}$/;
+            return re.test(input.value.trim());
+        },
 
-    clearError(input) {
-        const errorElement = input.parentElement.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.textContent = '';
-        }
-        input.classList.remove('error');
-    },
+        // 验证密码强度
+        validatePassword(input) {
+            const value = input.value;
+            const hasLength = value.length >= 8;
+            const hasLetter = /[a-zA-Z]/.test(value);
+            const hasNumber = /\d/.test(value);
+            const hasSpecial = /[!@#$%^&*]/.test(value);
 
-    createErrorElement(input) {
-        const errorElement = document.createElement('span');
-        errorElement.className = 'error-message';
-        input.parentElement.appendChild(errorElement);
-        return errorElement;
-    }
-};
-
-// 本地存储工具
-const storage = {
-    set(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.error('Storage Error:', e);
-        }
-    },
-
-    get(key) {
-        try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : null;
-        } catch (e) {
-            console.error('Storage Error:', e);
-            return null;
-        }
-    },
-
-    remove(key) {
-        try {
-            localStorage.removeItem(key);
-        } catch (e) {
-            console.error('Storage Error:', e);
+            return {
+                isValid: hasLength && hasLetter && hasNumber,
+                strength: hasSpecial ? 'strong' : (hasLength && hasLetter && hasNumber ? 'medium' : 'weak')
+            };
         }
     }
 };
 
-// 工具函数导出
-export {
-    loadingState,
-    errorHandler,
-    formValidator,
-    storage
-}; 
+export default utils; 

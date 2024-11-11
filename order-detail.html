@@ -7,145 +7,222 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="Future Furniture - 科技与艺术的完美融合，为您打造智能舒适的现代生活空间。">
 </head>
 <body>
+    <!-- 页面加载指示器 -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- 导航栏 -->
     <nav class="navbar">
-        <!-- 导航栏内容 -->
+        <!-- 导航栏内容与 index.html 相同 -->
     </nav>
 
     <main class="order-detail-page">
-        <div class="order-container">
-            <!-- 订单状态跟踪 -->
-            <div class="order-status-tracker">
-                <div class="status-step completed">
-                    <span class="step-icon material-icons">shopping_cart</span>
-                    <div class="step-info">
-                        <h3>下单成功</h3>
-                        <time>2024-03-15 14:30</time>
-                    </div>
-                </div>
-                <div class="status-step completed">
-                    <span class="step-icon material-icons">payments</span>
-                    <div class="step-info">
-                        <h3>支付完成</h3>
-                        <time>2024-03-15 14:35</time>
-                    </div>
-                </div>
-                <div class="status-step active">
-                    <span class="step-icon material-icons">inventory_2</span>
-                    <div class="step-info">
-                        <h3>商品出库</h3>
-                        <time>2024-03-16 10:20</time>
-                    </div>
-                </div>
-                <div class="status-step">
-                    <span class="step-icon material-icons">local_shipping</span>
-                    <div class="step-info">
-                        <h3>配送中</h3>
-                        <p>预计3-5天送达</p>
-                    </div>
-                </div>
-                <div class="status-step">
-                    <span class="step-icon material-icons">check_circle</span>
-                    <div class="step-info">
-                        <h3>订单完成</h3>
-                    </div>
-                </div>
-            </div>
+        <div class="container">
+            <!-- 订单状态追踪 - 修正图标和时间线结构 -->
+            <div class="order-tracker">
+                <div class="tracker-timeline">
+                    <div class="tracker-steps">
+                        <div class="tracker-step completed" data-step="ordered">
+                            <div class="step-icon">
+                                <span class="material-icons">shopping_cart</span>
+                            </div>
+                            <div class="step-info">
+                                <h3 class="step-title">下单成功</h3>
+                                <time datetime="2024-03-15T14:30">2024-03-15 14:30</time>
+                                <div class="step-detail">订单已提交，等待支付</div>
+                            </div>
+                            <div class="step-line"></div>
+                        </div>
 
-            <!-- 订单信息 -->
-            <div class="order-info">
-                <div class="info-section">
-                    <h2>订单信息</h2>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <label>订单编号</label>
-                            <span>2024031500001</span>
+                        <div class="tracker-step completed" data-step="paid">
+                            <div class="step-icon">
+                                <span class="material-icons">payments</span>
+                            </div>
+                            <div class="step-info">
+                                <h3 class="step-title">支付完成</h3>
+                                <time datetime="2024-03-15T14:35">2024-03-15 14:35</time>
+                                <div class="step-detail">支付宝支付 ¥2,799</div>
+                            </div>
+                            <div class="step-line"></div>
                         </div>
-                        <div class="info-item">
-                            <label>下单时间</label>
-                            <span>2024-03-15 14:30</span>
-                        </div>
-                        <div class="info-item">
-                            <label>支付方式</label>
-                            <span>支付宝</span>
-                        </div>
-                        <div class="info-item">
-                            <label>订单状态</label>
-                            <span class="status processing">商品出库</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 收货信息 -->
-                <div class="info-section">
-                    <h2>收货信息</h2>
-                    <div class="delivery-info">
-                        <p><strong>收货人：</strong>张三</p>
-                        <p><strong>联系电话：</strong>138****8888</p>
-                        <p><strong>收货地址：</strong>北京市朝阳区未来大厦B座</p>
-                        <p><strong>配送方式：</strong>免费配送</p>
-                    </div>
-                </div>
+                        <div class="tracker-step active" data-step="processing">
+                            <div class="step-icon">
+                                <span class="material-icons">inventory_2</span>
+                            </div>
+                            <div class="step-info">
+                                <h3 class="step-title">商品出库</h3>
+                                <time datetime="2024-03-16T10:20">2024-03-16 10:20</time>
+                                <div class="step-detail">商品正在打包中</div>
+                            </div>
+                            <div class="step-line"></div>
+                        </div>
 
-                <!-- 商品清单 -->
-                <div class="info-section">
-                    <h2>商品清单</h2>
-                    <div class="order-items">
-                        <div class="order-item">
-                            <img src="images/chair.jpg" alt="智能人体工学椅">
-                            <div class="item-info">
-                                <h3>智能人体工学椅</h3>
-                                <p class="item-spec">颜色：经典黑</p>
-                                <div class="item-price">
-                                    <span class="price">¥2,999</span>
-                                    <span class="quantity">×1</span>
+                        <div class="tracker-step" data-step="shipping">
+                            <div class="step-icon">
+                                <span class="material-icons">local_shipping</span>
+                            </div>
+                            <div class="step-info">
+                                <h3 class="step-title">配送中</h3>
+                                <div class="step-detail">预计3-5天送达</div>
+                                <div class="delivery-info" style="display: none;">
+                                    <p>快递单号：SF1234567890</p>
+                                    <p>配送员：张师傅 (138****8888)</p>
                                 </div>
                             </div>
-                            <div class="item-actions">
-                                <button class="btn-secondary">申请售后</button>
-                                <button class="btn-primary">评价商品</button>
+                            <div class="step-line"></div>
+                        </div>
+
+                        <div class="tracker-step" data-step="completed">
+                            <div class="step-icon">
+                                <span class="material-icons">check_circle</span>
+                            </div>
+                            <div class="step-info">
+                                <h3 class="step-title">订单完成</h3>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 订单金额 -->
-                <div class="info-section">
-                    <h2>订单金额</h2>
-                    <div class="order-amount">
-                        <div class="amount-item">
-                            <span>商品总额</span>
-                            <span>¥2,999</span>
+                <!-- 添加物流追踪地图 -->
+                <div class="delivery-map" id="deliveryMap" style="display: none;">
+                    <!-- 地图将通过 JavaScript 加载 -->
+                </div>
+
+                <!-- 添加售后服务选项 -->
+                <div class="service-options">
+                    <div class="service-header">
+                        <h3>售后服务</h3>
+                    </div>
+                    <div class="service-buttons">
+                        <button class="service-btn" data-service="return">
+                            <span class="material-icons">assignment_return</span>
+                            申请退货
+                        </button>
+                        <button class="service-btn" data-service="exchange">
+                            <span class="material-icons">swap_horiz</span>
+                            申请换货
+                        </button>
+                        <button class="service-btn" data-service="repair">
+                            <span class="material-icons">build</span>
+                            申请维修
+                        </button>
+                        <button class="service-btn" data-service="complaint">
+                            <span class="material-icons">report_problem</span>
+                            投诉建议
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 添加评价入口 -->
+                <div class="review-section" style="display: none;">
+                    <div class="review-header">
+                        <h3>商品评价</h3>
+                    </div>
+                    <div class="review-form">
+                        <div class="rating-stars">
+                            <span class="material-icons">star_border</span>
+                            <span class="material-icons">star_border</span>
+                            <span class="material-icons">star_border</span>
+                            <span class="material-icons">star_border</span>
+                            <span class="material-icons">star_border</span>
                         </div>
-                        <div class="amount-item">
-                            <span>运费</span>
-                            <span>免运费</span>
+                        <textarea placeholder="分享您的使用体验..." maxlength="500"></textarea>
+                        <div class="review-images">
+                            <button class="add-image">
+                                <span class="material-icons">add_photo_alternate</span>
+                                添加图片
+                            </button>
                         </div>
-                        <div class="amount-item">
-                            <span>优惠券</span>
-                            <span>-¥200</span>
+                        <button class="submit-review btn btn-primary">提交评价</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 订单信息 - 统一按钮样式 -->
+            <div class="order-section">
+                <h2 class="section-title">订单信息</h2>
+                <div class="order-grid">
+                    <div class="order-item">
+                        <label class="item-label">订单编号</label>
+                        <span class="item-value">2024031500001</span>
+                    </div>
+                    <div class="order-item">
+                        <label class="item-label">下单时间</label>
+                        <span class="item-value">2024-03-15 14:30</span>
+                    </div>
+                    <div class="order-item">
+                        <label class="item-label">支付方式</label>
+                        <span class="item-value">支付宝</span>
+                    </div>
+                    <div class="order-item">
+                        <label class="item-label">订单状态</label>
+                        <div class="order-status status-processing">商品出库</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品清单 - 统一按钮样式 -->
+            <div class="info-section">
+                <h2>商品清单</h2>
+                <div class="order-items">
+                    <div class="order-item">
+                        <img src="images/chair.jpg" alt="智能人体工学椅" loading="lazy">
+                        <div class="item-info">
+                            <h3>智能人体工学椅</h3>
+                            <p class="item-spec">颜色：经典黑</p>
+                            <div class="item-actions">
+                                <button class="btn btn-secondary">申请售后</button>
+                                <button class="btn btn-primary">评价商品</button>
+                            </div>
                         </div>
-                        <div class="amount-item total">
-                            <span>实付金额</span>
-                            <span>¥2,799</span>
+                        <div class="item-price">
+                            <div class="price">¥2,999</div>
+                            <div class="quantity">×1</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 订单操作 -->
-            <div class="order-actions">
-                <button class="btn-secondary">取消订单</button>
-                <button class="btn-primary">联系客服</button>
+            <!-- 订单操作 - 统一按钮样式 -->
+            <div class="action-buttons">
+                <button class="btn btn-outline">取消订单</button>
+                <button class="btn btn-primary">联系客服</button>
             </div>
         </div>
     </main>
 
-    <footer>
-        <!-- 页脚内容 -->
+    <!-- 页脚 -->
+    <footer class="main-footer">
+        <!-- 页脚内容与 index.html 相同 -->
     </footer>
 
+    <!-- 购物车弹出层 -->
+    <div class="cart-popup">
+        <div class="cart-header">
+            <h3>购物车</h3>
+            <button class="close-cart">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="cart-items">
+            <!-- 购物车商品将通过 JavaScript 动态加载 -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>合计：</span>
+                <span class="total-amount">¥0</span>
+            </div>
+            <button class="btn btn-primary checkout-btn">去结算</button>
+        </div>
+    </div>
+
+    <script src="utils.js" type="module"></script>
     <script src="main.js" type="module"></script>
+    <script src="order-tracker.js" type="module"></script>
 </body>
 </html> 
