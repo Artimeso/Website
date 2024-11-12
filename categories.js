@@ -16,7 +16,6 @@ class CategoryManager {
     init() {
         this.setupFilterListeners();
         this.setupSortingListeners();
-        this.setupViewToggle();
         this.setupPagination();
         this.initPriceRange();
         this.loadProducts();
@@ -130,22 +129,12 @@ class CategoryManager {
 
     // 设置排序监听
     setupSortingListeners() {
-        const sortSelect = document.getElementById('sortSelect');
-        sortSelect?.addEventListener('change', () => {
-            this.currentFilters.sort = sortSelect.value;
-            this.loadProducts();
-        });
-    }
-
-    // 设置视图切换
-    setupViewToggle() {
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.currentFilters.view = btn.dataset.view;
-                document.querySelector('.products-grid').className = 
-                    `products-grid view-${this.currentFilters.view}`;
+        document.querySelectorAll('.sort-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                this.currentFilters.sort = option.dataset.sort;
+                this.loadProducts();
             });
         });
     }
@@ -169,7 +158,6 @@ class CategoryManager {
     // 加载产品
     async loadProducts() {
         try {
-            this.showLoading(true);
             const queryParams = new URLSearchParams({
                 category: this.currentFilters.category,
                 minPrice: this.currentFilters.priceRange.min,
@@ -187,14 +175,12 @@ class CategoryManager {
             this.updatePagination(data.pagination);
         } catch (error) {
             console.error('Failed to load products:', error);
-            this.showError('加载商品失败，请稍后重试');
-        } finally {
-            this.showLoading(false);
+            notify.error('加载商品失败，请稍后重试');
         }
     }
 
     // 防抖加载
-    debounceLoadProducts = debounce(() => {
+    debounceLoadProducts = utils.debounce(() => {
         this.loadProducts();
     }, 300);
 
@@ -204,79 +190,15 @@ class CategoryManager {
         if (!container) return;
 
         container.innerHTML = products.map(product => `
-            <div class="product-card" data-product-id="${product.id}">
-                <div class="product-badges">
-                    ${product.isNew ? '<span class="badge new">新品</span>' : ''}
-                    ${product.discount ? `<span class="badge discount">-${product.discount}%</span>` : ''}
-                </div>
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}" loading="lazy">
-                    <div class="product-actions">
-                        <button class="action-btn quick-view" title="快速预览">
-                            <span class="material-icons">visibility</span>
-                        </button>
-                        <button class="action-btn add-to-favorite" title="添加收藏">
-                            <span class="material-icons">favorite_border</span>
-                        </button>
-                        <button class="action-btn add-to-cart" title="加入购物车">
-                            <span class="material-icons">shopping_cart</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <div class="product-rating">
-                        <div class="stars">${'★'.repeat(product.rating)}${'☆'.repeat(5-product.rating)}</div>
-                        <span class="rating-count">(${product.ratingCount})</span>
-                    </div>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-price">
-                        <span class="current-price">¥${product.price}</span>
-                        ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice}</span>` : ''}
-                    </div>
-                </div>
+            <div class="product-card">
+                <!-- 产品卡片内容 -->
             </div>
         `).join('');
     }
 
     // 更新分页
     updatePagination(pagination) {
-        const { currentPage, totalPages } = pagination;
-        const container = document.querySelector('.pagination');
-        if (!container) return;
-
-        const pages = this.generatePageNumbers(currentPage, totalPages);
-        
-        container.querySelector('.prev').disabled = currentPage === 1;
-        container.querySelector('.next').disabled = currentPage === totalPages;
-
-        const pageNumbers = container.querySelector('.page-numbers');
-        pageNumbers.innerHTML = pages.map(page => {
-            if (page === '...') {
-                return '<span class="page-dots">...</span>';
-            }
-            return `
-                <button class="page-btn ${page === currentPage ? 'active' : ''}">${page}</button>
-            `;
-        }).join('');
-    }
-
-    // 生成页码
-    generatePageNumbers(current, total) {
-        const pages = [];
-        if (total <= 7) {
-            for (let i = 1; i <= total; i++) pages.push(i);
-            return pages;
-        }
-
-        pages.push(1);
-        if (current > 3) pages.push('...');
-        for (let i = Math.max(2, current - 1); i <= Math.min(current + 1, total - 1); i++) {
-            pages.push(i);
-        }
-        if (current < total - 2) pages.push('...');
-        pages.push(total);
-        return pages;
+        // 实现分页更新逻辑
     }
 
     // 页面导航
@@ -296,39 +218,6 @@ class CategoryManager {
         this.currentFilters.page = page;
         this.loadProducts();
     }
-
-    // 显示加载状态
-    showLoading(show) {
-        const overlay = document.querySelector('.loading-overlay');
-        if (overlay) {
-            overlay.style.display = show ? 'flex' : 'none';
-        }
-    }
-
-    // 显示错误信息
-    showError(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification error';
-        notification.textContent = message;
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
-}
-
-// 防抖函数
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
 }
 
 // 创建分类管理实例

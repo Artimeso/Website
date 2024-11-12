@@ -14,6 +14,118 @@ window.auth = authManager;
 window.cart = cartManager;
 window.imageViewer = imageViewer;
 
+// 轮播图控制
+class Slider {
+    constructor(element) {
+        this.slider = element;
+        this.slides = element.querySelectorAll('.slide');
+        this.dots = element.querySelectorAll('.dot');
+        this.prevBtn = element.querySelector('.prev');
+        this.nextBtn = element.querySelector('.next');
+        this.currentSlide = 0;
+        this.slideCount = this.slides.length;
+        this.interval = null;
+        this.isAutoPlay = this.slider.dataset.autoPlay === 'true';
+        this.autoPlayInterval = parseInt(this.slider.dataset.interval) || 5000;
+        
+        this.init();
+    }
+
+    init() {
+        // 绑定按钮事件
+        this.prevBtn?.addEventListener('click', () => this.prevSlide());
+        this.nextBtn?.addEventListener('click', () => this.nextSlide());
+
+        // 绑定指示点事件
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // 触摸事件
+        if (this.slider.querySelector('[data-touch="true"]')) {
+            this.setupTouchEvents();
+        }
+
+        // 自动播放
+        if (this.isAutoPlay) {
+            this.startAutoPlay();
+            
+            // 鼠标悬停时暂停
+            this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
+            this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
+        }
+    }
+
+    // 切换到下一张
+    nextSlide() {
+        this.goToSlide((this.currentSlide + 1) % this.slideCount);
+    }
+
+    // 切换到上一张
+    prevSlide() {
+        this.goToSlide((this.currentSlide - 1 + this.slideCount) % this.slideCount);
+    }
+
+    // 切换到指定幻灯片
+    goToSlide(index) {
+        // 移除当前活动状态
+        this.slides[this.currentSlide].classList.remove('active');
+        this.dots[this.currentSlide].classList.remove('active');
+        this.dots[this.currentSlide].setAttribute('aria-selected', 'false');
+
+        // 设置新的活动状态
+        this.currentSlide = index;
+        this.slides[this.currentSlide].classList.add('active');
+        this.dots[this.currentSlide].classList.add('active');
+        this.dots[this.currentSlide].setAttribute('aria-selected', 'true');
+    }
+
+    // 设置触摸事件
+    setupTouchEvents() {
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        this.slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            this.stopAutoPlay();
+        }, { passive: true });
+
+        this.slider.addEventListener('touchmove', (e) => {
+            touchEndX = e.touches[0].clientX;
+        }, { passive: true });
+
+        this.slider.addEventListener('touchend', () => {
+            const difference = touchStartX - touchEndX;
+            if (Math.abs(difference) > 50) { // 最小滑动距离
+                if (difference > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+            if (this.isAutoPlay) {
+                this.startAutoPlay();
+            }
+        });
+    }
+
+    // 开始自动播放
+    startAutoPlay() {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+        this.interval = setInterval(() => this.nextSlide(), this.autoPlayInterval);
+    }
+
+    // 停止自动播放
+    stopAutoPlay() {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        }
+    }
+}
+
 class MainApp {
     constructor() {
         window.notify = notificationManager;
@@ -26,6 +138,11 @@ class MainApp {
         this.setupCommonFeatures();
         this.initPageSpecific();
         this.setupEventListeners();
+
+        // 初始化所有轮播图
+        document.querySelectorAll('.hero-slider').forEach(slider => {
+            new Slider(slider);
+        });
     }
 
     // 设置公共功能

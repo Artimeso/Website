@@ -16,41 +16,45 @@
 
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="logo">Future Furniture</div>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">首页</a></li>
-            <li class="dropdown">
-                <a href="categories.html">产品系列</a>
-                <div class="dropdown-menu">
-                    <a href="categories.html?type=living">客厅家具</a>
-                    <a href="categories.html?type=bedroom">卧室家具</a>
-                    <a href="categories.html?type=office">办公家具</a>
-                    <a href="categories.html?type=dining">餐厅家具</a>
-                </div>
-            </li>
-            <li><a href="about.html">关于我们</a></li>
-            <li><a href="contact.html">联系我们</a></li>
-            <li class="search-box">
-                <input type="text" placeholder="搜索产品...">
-                <button class="search-btn">
-                    <span class="material-icons">search</span>
-                </button>
-            </li>
-            <li class="cart-icon">
-                <a href="cart.html">
-                    <span class="material-icons">shopping_cart</span>
-                    <span class="cart-count">0</span>
-                </a>
-            </li>
-            <li class="user-menu">
-                <a href="login.html">
-                    <span class="material-icons">person</span>
-                </a>
-            </li>
-        </ul>
-        <button class="mobile-menu-btn">
-            <span class="material-icons">menu</span>
-        </button>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">Future Furniture</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li class="dropdown">
+                    <a href="categories.html" class="dropdown-toggle">产品系列</a>
+                    <div class="dropdown-menu">
+                        <a href="categories.html?type=living">客厅家具</a>
+                        <a href="categories.html?type=bedroom">卧室家具</a>
+                        <a href="categories.html?type=office">办公家具</a>
+                        <a href="categories.html?type=dining">餐厅家具</a>
+                    </div>
+                </li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+                <li class="search-box">
+                    <input type="text" placeholder="搜索产品...">
+                    <button class="search-btn">
+                        <span class="material-icons">search</span>
+                    </button>
+                </li>
+                <li class="cart-icon">
+                    <a href="cart.html">
+                        <span class="material-icons">shopping_cart</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+                <li class="user-menu">
+                    <a href="login.html">
+                        <span class="material-icons">person</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <span class="material-icons">menu</span>
+            </button>
+        </div>
     </nav>
 
     <!-- 移动端菜单 -->
@@ -61,34 +65,32 @@
                 <span class="material-icons">close</span>
             </button>
         </div>
-        <div class="mobile-menu-content">
-            <div class="mobile-search">
-                <input type="text" placeholder="搜索产品...">
-                <button class="search-btn">
-                    <span class="material-icons">search</span>
-                </button>
-            </div>
-            <nav class="mobile-nav">
-                <a href="index.html" class="active">首页</a>
-                <div class="mobile-dropdown">
-                    <div class="dropdown-toggle">
-                        产品系列
-                        <span class="material-icons">expand_more</span>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="categories.html?type=living">客厅家具</a>
-                        <a href="categories.html?type=bedroom">卧室家具</a>
-                        <a href="categories.html?type=office">办公家具</a>
-                        <a href="categories.html?type=dining">餐厅家具</a>
-                    </div>
+        <div class="mobile-search">
+            <input type="text" placeholder="搜索产品...">
+            <button class="search-btn">
+                <span class="material-icons">search</span>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html" class="active">首页</a>
+            <div class="mobile-dropdown">
+                <div class="dropdown-toggle">
+                    产品系列
+                    <span class="material-icons">expand_more</span>
                 </div>
-                <a href="about.html">关于我们</a>
-                <a href="contact.html">联系我们</a>
-            </nav>
-            <div class="mobile-user-actions">
-                <a href="login.html" class="btn btn-outline">登录</a>
-                <a href="register.html" class="btn btn-primary">注册</a>
+                <div class="dropdown-menu">
+                    <a href="categories.html?type=living">客厅家具</a>
+                    <a href="categories.html?type=bedroom">卧室家具</a>
+                    <a href="categories.html?type=office">办公家具</a>
+                    <a href="categories.html?type=dining">餐厅家具</a>
+                </div>
             </div>
+            <a href="about.html">关于我们</a>
+            <a href="contact.html">联系我们</a>
+        </nav>
+        <div class="mobile-user-actions">
+            <a href="login.html" class="btn btn-outline">登录</a>
+            <a href="register.html" class="btn btn-primary">注册</a>
         </div>
     </div>
 
@@ -98,7 +100,7 @@
         <section class="hero-slider" data-auto-play="true" data-interval="5000">
             <div class="slider-container" data-touch="true">
                 <div class="slide active">
-                    <img src="images/hero-1.jpg" alt="现代家居">
+                    <img src="images/hero-1.jpg" alt="现代家居" loading="eager" fetchpriority="high">
                     <div class="slide-content">
                         <h1 class="slide-title">重新定义现代家居</h1>
                         <p class="slide-description">科技与艺术的完美融合</p>
@@ -106,32 +108,32 @@
                     </div>
                 </div>
                 <div class="slide">
-                    <img src="images/hero-2.jpg" alt="智能办公">
+                    <img src="images/hero-2.jpg" alt="智能办公" loading="eager">
                     <div class="slide-content">
-                        <h1>智能办公空间</h1>
-                        <p>提升工作效率的专业择</p>
-                        <button class="cta-button">了解更多</button>
+                        <h1 class="slide-title">智能办公空间</h1>
+                        <p class="slide-description">提升工作效率的专业选择</p>
+                        <button class="btn btn-primary">了解更多</button>
                     </div>
                 </div>
                 <div class="slide">
-                    <img src="images/hero-3.jpg" alt="品质生活">
+                    <img src="images/hero-3.jpg" alt="品质生活" loading="eager">
                     <div class="slide-content">
-                        <h1>品质生活美学</h1>
-                        <p>为理想生活空间而设计</p>
-                        <button class="cta-button">立即选购</button>
+                        <h1 class="slide-title">品质生活美学</h1>
+                        <p class="slide-description">为理想生活空间而设计</p>
+                        <button class="btn btn-primary">立即选购</button>
                     </div>
                 </div>
             </div>
-            <button class="slider-btn prev">
+            <button class="slider-btn prev" aria-label="上一张">
                 <span class="material-icons">chevron_left</span>
             </button>
-            <button class="slider-btn next">
+            <button class="slider-btn next" aria-label="下一张">
                 <span class="material-icons">chevron_right</span>
             </button>
-            <div class="slider-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+            <div class="slider-dots" role="tablist">
+                <button class="dot active" role="tab" aria-selected="true" aria-label="第1张"></button>
+                <button class="dot" role="tab" aria-selected="false" aria-label="第2张"></button>
+                <button class="dot" role="tab" aria-selected="false" aria-label="第3张"></button>
             </div>
         </section>
 
@@ -141,31 +143,59 @@
                 <h2 class="section-title">产品分类</h2>
                 <div class="category-grid">
                     <a href="categories.html?type=living" class="category-card">
-                        <img src="images/living-room.jpg" alt="客厅家具">
+                        <div class="category-image">
+                            <img src="images/living-room.jpg" alt="客厅家具" loading="lazy">
+                        </div>
                         <div class="category-content">
-                            <h3>客厅家具</h3>
-                            <p>打造温馨舒适的生活空间</p>
+                            <div class="content-inner">
+                                <h3 class="category-title">客厅家具</h3>
+                                <p class="category-desc">打造温馨舒适的生活空间</p>
+                                <span class="category-link">
+                                    查看更多 <span class="material-icons">arrow_forward</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                     <a href="categories.html?type=bedroom" class="category-card">
-                        <img src="images/bedroom.jpg" alt="卧室家具">
+                        <div class="category-image">
+                            <img src="images/bedroom.jpg" alt="卧室家具" loading="lazy">
+                        </div>
                         <div class="category-content">
-                            <h3>卧室家具</h3>
-                            <p>享受优质睡眠体验</p>
+                            <div class="content-inner">
+                                <h3 class="category-title">卧室家具</h3>
+                                <p class="category-desc">享受优质睡眠体验</p>
+                                <span class="category-link">
+                                    查看更多 <span class="material-icons">arrow_forward</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                     <a href="categories.html?type=office" class="category-card">
-                        <img src="images/office.jpg" alt="办公家具">
+                        <div class="category-image">
+                            <img src="images/office.jpg" alt="办公家具" loading="lazy">
+                        </div>
                         <div class="category-content">
-                            <h3>办公家具</h3>
-                            <p>提升工作效率的专业选择</p>
+                            <div class="content-inner">
+                                <h3 class="category-title">办公家具</h3>
+                                <p class="category-desc">提升工作效率的专业选择</p>
+                                <span class="category-link">
+                                    查看更多 <span class="material-icons">arrow_forward</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                     <a href="categories.html?type=dining" class="category-card">
-                        <img src="images/dining.jpg" alt="餐厅家具">
+                        <div class="category-image">
+                            <img src="images/dining.jpg" alt="餐厅家具" loading="lazy">
+                        </div>
                         <div class="category-content">
-                            <h3>餐厅家具</h3>
-                            <p>品味生活每一刻</p>
+                            <div class="content-inner">
+                                <h3 class="category-title">餐厅家具</h3>
+                                <p class="category-desc">品味生活每一刻</p>
+                                <span class="category-link">
+                                    查看更多 <span class="material-icons">arrow_forward</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -185,10 +215,10 @@
                             <button class="tab" data-category="sale">特惠</button>
                         </div>
                         <div class="slider-controls">
-                            <button class="prev-btn">
+                            <button class="prev-btn" aria-label="上一页">
                                 <span class="material-icons">chevron_left</span>
                             </button>
-                            <button class="next-btn">
+                            <button class="next-btn" aria-label="下一页">
                                 <span class="material-icons">chevron_right</span>
                             </button>
                         </div>
@@ -196,23 +226,22 @@
                 </div>
 
                 <div class="products-slider">
-                    <div class="product-card" data-product-id="1">
-                        <div class="product-badges">
-                            <span class="badge new">新品</span>
-                            <span class="badge discount">-20%</span>
-                        </div>
+                    <div class="product-card">
                         <div class="product-image">
-                            <img src="images/chair.jpg" alt="智能人体工学椅" loading="lazy">
+                            <img src="images/product-1.jpg" alt="智能人体工学椅" loading="lazy">
+                            <div class="product-badges">
+                                <span class="badge new">新品</span>
+                                <span class="badge discount">-20%</span>
+                            </div>
                             <div class="product-actions">
-                                <button class="action-btn quick-view" title="快速预览" data-product-id="1">
+                                <button class="action-btn quick-view" title="快速预览">
                                     <span class="material-icons">visibility</span>
                                 </button>
-                                <button class="action-btn add-to-favorite" title="添加收藏" data-product-id="1">
+                                <button class="action-btn add-to-favorite" title="添加收藏">
                                     <span class="material-icons">favorite_border</span>
                                 </button>
-                                <button class="action-btn add-to-cart" title="加入购物车" data-product-id="1">
+                                <button class="action-btn add-to-cart" title="加入购物车">
                                     <span class="material-icons">shopping_cart</span>
-                                    <span class="loading-spinner"></span>
                                 </button>
                             </div>
                         </div>
@@ -229,7 +258,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 更多产品卡片 -->
+                    <!-- 更多产品卡片使用相同结构 -->
                 </div>
             </div>
         </section>
@@ -241,66 +270,66 @@
                     <div class="promotion-card large">
                         <img src="images/promo-1.jpg" alt="限时特惠">
                         <div class="promotion-content">
-                            <h3>夏季特惠</h3>
-                            <p>精选办公家具 8折起</p>
-                            <span class="time-left">剩余 3 天</span>
-                            <a href="categories.html?promotion=summer" class="promo-btn">立即抢购</a>
-                        </div>
-                    </div>
-                    <div class="promotion-card">
-                        <img src="images/promo-2.jpg" alt="新品上市">
-                        <div class="promotion-content">
-                            <h3>新品首发</h3>
-                            <p>智能家居系列</p>
-                            <a href="categories.html?type=smart" class="promo-btn">了解更多</a>
-                        </div>
-                    </div>
-                    <div class="promotion-card">
-                        <img src="images/promo-3.jpg" alt="会员专享">
-                        <div class="promotion-content">
-                            <h3>会员专享</h3>
-                            <p>尊享9.5折优惠</p>
-                            <a href="user-center.html" class="promo-btn">立即加入</a>
+                            <div class="promo-tag">限时特惠</div>
+                            <h3 class="promo-title">夏季特惠</h3>
+                            <p class="promo-desc">精选办公家具</p>
+                            <div class="promo-price">
+                                <span class="discount">8折起</span>
+                            </div>
+                            <div class="promo-footer">
+                                <span class="time-left">
+                                    <span class="material-icons">schedule</span>
+                                    剩余 3 天
+                                </span>
+                                <a href="categories.html?promotion=summer" class="promo-btn">立即抢购</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 新品上市区 -->
+        <!-- 新品上市区域 -->
         <section class="new-arrivals">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">新品上市</h2>
                     <a href="categories.html?type=new" class="view-all">
-                        查看全部 <span class="material-icons">arrow_forward</span>
+                        查看全部
+                        <span class="material-icons">chevron_right</span>
                     </a>
                 </div>
                 
                 <div class="new-products-grid">
+                    <!-- 大卡片 -->
                     <div class="new-product-card featured">
                         <div class="product-image">
                             <img src="images/new-product-1.jpg" alt="智能温控床垫" loading="lazy">
                             <div class="product-tag">新品首发</div>
                         </div>
                         <div class="product-info">
-                            <h3>智能温控床垫</h3>
-                            <p>AI温度调节，助你好眠</p>
+                            <h3 class="product-name">智能温控床垫</h3>
+                            <p class="product-desc">AI温度调节，助你好眠</p>
                             <div class="price">¥4,999</div>
-                            <button class="preview-btn">预览</button>
+                            <button class="btn btn-primary">预览</button>
                         </div>
                     </div>
 
+                    <!-- 小卡片列表 -->
                     <div class="new-product-list">
-                        <div class="new-product-item">
-                            <img src="images/new-product-2.jpg" alt="多功能沙发" loading="lazy">
-                            <div class="item-info">
-                                <h4>多功能沙发</h4>
-                                <p>模块化设计，自由组合</p>
+                        <div class="new-product-card">
+                            <div class="product-image">
+                                <img src="images/new-product-2.jpg" alt="多功能沙发" loading="lazy">
+                                <div class="product-tag">新品</div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">多功能沙发</h3>
+                                <p class="product-desc">模块化设计，自由组合</p>
                                 <div class="price">¥3,299</div>
+                                <button class="btn btn-primary">预览</button>
                             </div>
                         </div>
-                        <!-- 更多新品项目 -->
+                        <!-- 可以添加更多相同结构的卡片 -->
                     </div>
                 </div>
             </div>
@@ -357,19 +386,20 @@
         <section class="newsletter">
             <div class="container">
                 <div class="newsletter-content">
-                    <h2>订阅我们</h2>
-                    <p>订阅获取最新产品信息和独家优惠</p>
+                    <h2 class="newsletter-title">订阅我们</h2>
+                    <p class="newsletter-desc">订阅获取最新产品信息和独家优惠</p>
                     <form class="newsletter-form">
                         <div class="input-group">
                             <input type="email" placeholder="请输入您的邮箱" required>
                             <button type="submit">
-                                订阅 <span class="material-icons">arrow_forward</span>
+                                订阅
+                                <span class="material-icons">arrow_forward</span>
                             </button>
                         </div>
                         <div class="form-note">
                             <label>
                                 <input type="checkbox" required>
-                                我同意接收品和活动相关的邮件
+                                <span>我同意接收产品和活动相关的邮件</span>
                             </label>
                         </div>
                     </form>
@@ -396,7 +426,7 @@
                             <span class="material-icons">facebook</span>
                         </a>
                         <a href="#" class="social-link">
-                            <span class="material-icons">instagram</span>
+                            <span class="material-icons">photo_camera</span>
                         </a>
                     </div>
                 </div>
@@ -418,7 +448,7 @@
                     <ul class="footer-links">
                         <li><a href="shipping.html">配送说明</a></li>
                         <li><a href="returns.html">退换政策</a></li>
-                        <li><a href="warranty.html">保服务</a></li>
+                        <li><a href="warranty.html">保修服务</a></li>
                         <li><a href="faq.html">常见问题</a></li>
                     </ul>
                 </div>
@@ -441,7 +471,7 @@
                         </li>
                         <li>
                             <span class="material-icons">access_time</span>
-                            <span>周至周日 9:00-21:00</span>
+                            <span>周一至周日 9:00-21:00</span>
                         </li>
                     </ul>
                 </div>
