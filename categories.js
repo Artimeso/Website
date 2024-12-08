@@ -46,17 +46,19 @@ class CategoryManager {
     // 初始化价格范围滑块
     initPriceRange() {
         const slider = document.querySelector('.range-slider');
+        if (!slider) return;
+
         const minHandle = slider.querySelector('[data-handle="min"]');
         const maxHandle = slider.querySelector('[data-handle="max"]');
         const rangeFill = slider.querySelector('.range-fill');
         const minInput = document.getElementById('minPrice');
         const maxInput = document.getElementById('maxPrice');
 
-        let isDragging = false;
-        let currentHandle = null;
-        const sliderRect = slider.getBoundingClientRect();
         const min = parseInt(slider.dataset.min);
         const max = parseInt(slider.dataset.max);
+
+        let isDragging = false;
+        let currentHandle = null;
 
         // 更新滑块位置
         const updateHandlePosition = (handle, value) => {
@@ -115,16 +117,26 @@ class CategoryManager {
                 if (isNaN(value)) return;
 
                 if (input === minInput) {
-                    this.currentFilters.priceRange.min = Math.min(Math.max(value, min), this.currentFilters.priceRange.max);
+                    this.currentFilters.priceRange.min = Math.min(
+                        Math.max(value, min),
+                        this.currentFilters.priceRange.max
+                    );
                     updateHandlePosition(minHandle, this.currentFilters.priceRange.min);
                 } else {
-                    this.currentFilters.priceRange.max = Math.min(Math.max(value, this.currentFilters.priceRange.min), max);
+                    this.currentFilters.priceRange.max = Math.min(
+                        Math.max(value, this.currentFilters.priceRange.min),
+                        max
+                    );
                     updateHandlePosition(maxHandle, this.currentFilters.priceRange.max);
                 }
 
                 this.debounceLoadProducts();
             });
         });
+
+        // 初始化位置
+        updateHandlePosition(minHandle, this.currentFilters.priceRange.min);
+        updateHandlePosition(maxHandle, this.currentFilters.priceRange.max);
     }
 
     // 设置排序监听

@@ -31,13 +31,13 @@
         <div class="container">
             <!-- 分类筛选器 -->
             <div class="category-filters">
-                <button class="filter-tag active">全部</button>
-                <button class="filter-tag">客厅家具</button>
-                <button class="filter-tag">卧室家具</button>
-                <button class="filter-tag">办公家具</button>
-                <button class="filter-tag">餐厅家具</button>
-                <button class="filter-tag">智能家具</button>
-                <button class="filter-tag">新品上市</button>
+                <button class="filter-tag active" data-category="all">全部</button>
+                <button class="filter-tag" data-category="living">客厅家具</button>
+                <button class="filter-tag" data-category="bedroom">卧室家具</button>
+                <button class="filter-tag" data-category="office">办公家具</button>
+                <button class="filter-tag" data-category="dining">餐厅家具</button>
+                <button class="filter-tag" data-category="smart">智能家具</button>
+                <button class="filter-tag" data-category="new">新品上市</button>
             </div>
 
             <!-- 分类内容区 -->
@@ -45,18 +45,28 @@
                 <!-- 侧边筛选栏 -->
                 <aside class="filter-sidebar">
                     <!-- 价格范围 -->
-                    <div class="filter-section">
+                    <div class="filter-section price-filter">
                         <h3>价格范围</h3>
                         <div class="price-range">
-                            <div class="range-slider">
-                                <div class="range-fill"></div>
-                                <div class="range-handle" data-handle="min"></div>
-                                <div class="range-handle" data-handle="max"></div>
+                            <!-- 滑块容器 -->
+                            <div class="range-slider-wrapper">
+                                <div class="range-slider" data-min="0" data-max="10000">
+                                    <div class="range-fill"></div>
+                                    <div class="range-handle" data-handle="min"></div>
+                                    <div class="range-handle" data-handle="max"></div>
+                                </div>
                             </div>
-                            <div class="price-inputs">
-                                <input type="number" class="price-input" placeholder="最低价">
-                                <span>-</span>
-                                <input type="number" class="price-input" placeholder="最高价">
+                            <!-- 输入框容器 -->
+                            <div class="price-inputs-wrapper">
+                                <div class="price-range-input-group">
+                                    <input type="number" class="price-range-input" id="minPrice" placeholder="最低价">
+                                    <span class="price-currency">¥</span>
+                                </div>
+                                <span class="price-separator">-</span>
+                                <div class="price-range-input-group">
+                                    <input type="number" class="price-range-input" id="maxPrice" placeholder="最高价">
+                                    <span class="price-currency">¥</span>
+                                </div>
                             </div>
                         </div>
                     </div>
